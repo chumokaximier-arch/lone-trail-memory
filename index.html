@@ -395,7 +395,7 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 <div class="terrain" aria-hidden="true"><i class="m-blue"></i><i class="m-sand"></i><i class="m-orange"></i><i class="m-red"></i></div>
 
 <div class="page">
-  <div class="mobile-appbar"><b>孤星档案</b><span>名词记忆系统</span></div>
+  <div class="mobile-appbar"><b>孤星档案</b><span>名词记忆系统 · iOS</span></div>
   <header class="hero">
     <canvas id="heroCanvas" aria-hidden="true"></canvas>
     <div class="scanline" aria-hidden="true"></div>
@@ -640,6 +640,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(()=>{}));}
 </script></body>
 </html>
