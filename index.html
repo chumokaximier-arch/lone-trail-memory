@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="孤星记忆">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<title>市场营销与推销实务 · 名词背诵学习程序</title>
+<style>
+:root{
+  --bg:#f5f7fb; --panel:#ffffff; --panel-2:#f9fafc; --text:#172033; --muted:#68738a;
+  --line:#e6eaf2; --primary:#335cff; --primary-dark:#2345d8; --primary-soft:#eef2ff;
+  --green:#14865b; --green-soft:#e8f7f0; --amber:#b86b00; --amber-soft:#fff5dd;
+  --red:#c74444; --red-soft:#fff0f0; --purple:#7a4fd3; --purple-soft:#f3edff;
+  --shadow:0 14px 38px rgba(30,48,86,.09); --shadow-sm:0 5px 18px rgba(30,48,86,.07);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 8% 0%,rgba(76,117,255,.14),transparent 28%),radial-gradient(circle at 95% 6%,rgba(122,79,211,.12),transparent 24%),var(--bg);color:var(--text);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;line-height:1.65}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.page{max-width:1240px;margin:0 auto;padding:28px 20px 54px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#1c2a5a,#335cff 58%,#7a4fd3);color:#fff;border-radius:28px;padding:34px 36px;box-shadow:var(--shadow)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.11)}
+.hero:before{width:260px;height:260px;right:-65px;top:-110px}
+.hero:after{width:160px;height:160px;right:150px;bottom:-105px}
+.hero-content{position:relative;z-index:1;display:flex;justify-content:space-between;gap:28px;align-items:flex-end}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.14);font-size:13px;letter-spacing:.03em}
+h1{margin:13px 0 7px;font-size:clamp(27px,4vw,44px);line-height:1.2;letter-spacing:-.02em}
+.hero p{margin:0;max-width:760px;color:rgba(255,255,255,.84);font-size:15px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(78px,1fr));gap:10px;min-width:350px}
+.hero-stat{padding:13px 12px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.16);border-radius:16px;text-align:center}
+.hero-stat b{display:block;font-size:23px;line-height:1.15}
+.hero-stat span{font-size:12px;color:rgba(255,255,255,.78)}
+.toolbar{margin:22px 0 16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 17px;box-shadow:var(--shadow-sm)}
+.toolbar-row{display:flex;gap:11px;align-items:center;flex-wrap:wrap}
+.toolbar-row + .toolbar-row{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.segmented{display:flex;gap:7px;flex-wrap:wrap}
+.pill,.tab-btn{border:1px solid transparent;background:var(--panel-2);color:var(--muted);border-radius:999px;padding:9px 14px;transition:.18s;font-weight:600;font-size:14px}
+.pill:hover,.tab-btn:hover{border-color:#cbd4ea;color:var(--text)}
+.pill.active,.tab-btn.active{background:var(--primary-soft);color:var(--primary-dark);border-color:#cad5ff}
+.pill .count{font-size:12px;opacity:.72;margin-left:3px}
+.control{display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:13px}
+.control select{border:0;background:transparent;color:var(--text);outline:0;max-width:250px}
+.search{flex:1;min-width:220px;display:flex;align-items:center;gap:9px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px}
+.search input{width:100%;border:0;background:transparent;outline:0;color:var(--text)}
+.switch{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600;user-select:none}
+.switch input{accent-color:var(--primary);width:17px;height:17px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.content{animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:calc(var(--radius) + 2px);box-shadow:var(--shadow-sm)}
+.empty{padding:60px 24px;text-align:center;color:var(--muted)}
+.study-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px}
+.card-stage{padding:22px;min-height:520px;display:flex;flex-direction:column}
+.card-top{display:flex;justify-content:space-between;gap:14px;align-items:center;color:var(--muted);font-size:13px}
+.badges{display:flex;gap:7px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:var(--panel-2);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+.badge.must{background:var(--amber-soft);color:var(--amber);border-color:#f3dfaa}
+.badge.course{background:var(--primary-soft);color:var(--primary-dark);border-color:#d7dfff}
+.term-card{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 5px 12px}
+.term-label{font-size:13px;letter-spacing:.22em;color:var(--primary);font-weight:800;margin-bottom:8px}
+.term-name{font-size:clamp(29px,5vw,48px);line-height:1.24;font-weight:800;letter-spacing:-.025em;margin:0;max-width:920px}
+.hint{margin-top:12px;color:var(--muted);font-size:13px}
+.answer{width:min(880px,100%);margin-top:22px;text-align:left;padding:20px 22px;border-radius:18px;background:linear-gradient(180deg,#fffdf5,#fff9e8);border:1px solid #f0dfad;box-shadow:inset 0 1px 0 #fff;animation:answer .22s ease}
+@keyframes answer{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.answer-label{font-size:12px;letter-spacing:.16em;font-weight:800;color:var(--amber);margin-bottom:7px}
+.answer p{margin:0;font-size:17px;line-height:1.88;color:#3f3420}
+mark{background:linear-gradient(transparent 55%,#ffe38d 55%);color:inherit;font-weight:700;padding:0 1px;border-radius:2px}
+.keywords{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.keyword{font-size:12px;padding:4px 9px;border-radius:999px;background:#fff;border:1px solid #f0dfad;color:#8b6416}
+.card-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:0;border-radius:12px;padding:10px 15px;background:var(--primary);color:#fff;font-weight:700;box-shadow:0 5px 15px rgba(51,92,255,.19);transition:.18s}
+.btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn.secondary{background:var(--panel-2);color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.secondary:hover{background:#eef1f7;transform:none}
+.btn.good{background:var(--green);box-shadow:0 5px 15px rgba(20,134,91,.17)}
+.btn.warn{background:#fff;color:var(--amber);border:1px solid #ebd49c;box-shadow:none}
+.btn.danger{background:var(--red)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.side{padding:17px;height:fit-content;position:sticky;top:16px}
+.side h3{margin:0 0 10px;font-size:15px}
+.progress-bar{height:10px;background:#e9edf5;border-radius:999px;overflow:hidden;margin:8px 0}
+.progress-bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--purple));border-radius:inherit;transition:width .25s}
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.mini-stat{padding:10px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;text-align:center}
+.mini-stat b{display:block;font-size:20px}.mini-stat span{font-size:12px;color:var(--muted)}
+.legend{font-size:12px;color:var(--muted);margin:11px 0}
+.legend span{display:inline-block;margin-right:9px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.dot.done{background:var(--green)}.dot.review{background:var(--amber)}.dot.new{background:#b8c1d5}
+.quick-list{display:grid;gap:6px;max-height:335px;overflow:auto;padding-right:3px}
+.quick-item{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 10px;text-align:left;color:var(--text);font-size:13px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.quick-item:hover{border-color:#bac8f1;background:#fafbff}
+.quick-item small{color:var(--muted);white-space:nowrap}
+
+.list-panel{padding:20px}
+.list-head{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.list-head h2{margin:0;font-size:21px}.list-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.term-list{display:grid;gap:11px}
+.term-row{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:15px 16px;border:1px solid var(--line);border-radius:15px;background:#fff}
+.term-row:hover{border-color:#ccd6ef;box-shadow:0 5px 16px rgba(30,48,86,.05)}
+.term-row .term-side b{font-size:17px;display:block;line-height:1.45}
+.term-row .meta{font-size:12px;color:var(--muted);margin-top:5px}
+.term-row .definition{color:#3c465c;font-size:15px}
+.hidden-definition{color:transparent!important;background:linear-gradient(90deg,#edf0f6,#f7f8fb);border-radius:7px;user-select:none}
+.quiz-panel{padding:22px}.quiz-intro{max-width:760px}
+.quiz-intro h2{margin:0 0 8px}.quiz-intro p{color:var(--muted)}
+.quiz-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.quiz-shell{margin-top:18px}
+.quiz-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;color:var(--muted);font-size:13px}
+.quiz-question{padding:20px;border-radius:16px;background:var(--primary-soft);border:1px solid #dce3ff}
+.quiz-question small{color:var(--primary-dark);font-weight:800;letter-spacing:.12em}
+.quiz-question p{margin:8px 0 0;font-size:17px;line-height:1.85;color:#263664}
+.option-list{display:grid;gap:10px;margin-top:14px}
+.option{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--text);transition:.16s}
+.option:hover:not(:disabled){border-color:#bdcafa;background:#fafbff}
+.option .letter{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--panel-2);display:grid;place-items:center;font-weight:800;color:var(--muted)}
+.option.correct{border-color:#8ed7b8;background:var(--green-soft)}
+.option.correct .letter{background:var(--green);color:#fff}
+.option.wrong{border-color:#f1b4b4;background:var(--red-soft)}
+.option.wrong .letter{background:var(--red);color:#fff}
+.quiz-feedback{margin-top:13px;padding:12px 14px;border-radius:12px;font-size:14px}
+.quiz-feedback.good{background:var(--green-soft);color:#116b49}.quiz-feedback.bad{background:var(--red-soft);color:#9a2f2f}
+.result{text-align:center;padding:28px 20px}.result .score{font-size:52px;font-weight:900;color:var(--primary);line-height:1}
+.result h2{margin:8px 0 5px}.result p{color:var(--muted)}
+.wrong-list{text-align:left;max-width:760px;margin:18px auto 0;display:grid;gap:8px}
+.wrong-item{padding:12px 14px;border:1px solid #f1d2d2;background:#fffafa;border-radius:12px}
+.wrong-item b{color:var(--red)}
+.progress-panel{padding:22px}.overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.overview-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--panel-2);text-align:center}
+.overview-card b{font-size:30px;display:block}.overview-card span{color:var(--muted);font-size:13px}
+.progress-projects{display:grid;gap:10px}.project-progress{display:grid;grid-template-columns:200px 1fr 70px;gap:12px;align-items:center;padding:11px 13px;border:1px solid var(--line);border-radius:13px}
+.project-progress .bar{height:9px;border-radius:99px;background:#e8ecf4;overflow:hidden}.project-progress .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#5ccf9a)}
+.project-progress b{font-size:14px}.project-progress small{color:var(--muted);text-align:right}
+.footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 8px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;background:#172033;color:#fff;padding:10px 15px;border-radius:12px;box-shadow:var(--shadow);z-index:99;pointer-events:none;transition:.22s;font-size:14px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:980px){.hero-content{display:block}.hero-stats{margin-top:22px;min-width:0}.study-layout{grid-template-columns:1fr}.side{position:static}.overview-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.page{padding:14px 11px 38px}.hero{padding:25px 21px;border-radius:22px}.hero-stats{grid-template-columns:repeat(3,1fr)}.toolbar{padding:12px}.control{width:100%}.control select{max-width:none;width:100%}.search{min-width:100%}.term-row{grid-template-columns:1fr}.card-stage{padding:16px;min-height:480px}.term-name{font-size:29px}.term-card{padding-top:10px}.project-progress{grid-template-columns:1fr 70px}.project-progress .bar{grid-column:1/-1;grid-row:2}.overview-grid{grid-template-columns:1fr 1fr}.card-actions .btn{flex:1 1 42%}.quiz-panel,.list-panel,.progress-panel{padding:15px}}
+@media print{body{background:#fff}.hero,.toolbar,.tabs,.side,.card-actions,.footer,.btn{display:none!important}.page{max-width:none;padding:0}.content{display:none!important}.content.print-area{display:block!important}.panel{box-shadow:none;border:0}.term-row{break-inside:avoid;grid-template-columns:180px 1fr}.hidden-definition{color:#3c465c!important;background:none!important}}
+/* ===== Black & White Motion Design Override ===== */
+:root{
+  --bg:#e8e8e6; --panel:#ffffff; --panel-2:#f5f5f4; --text:#101010; --muted:#6e6e6e;
+  --line:#111111; --primary:#101010; --primary-dark:#000000; --primary-soft:#f0f0f0;
+  --green:#101010; --green-soft:#f1f1f1; --amber:#101010; --amber-soft:#fafafa;
+  --red:#333333; --red-soft:#f2f2f2; --purple:#555555; --purple-soft:#ebebeb;
+  --shadow:12px 12px 0 #111111; --shadow-sm:7px 7px 0 #111111; --radius:2px;
+}
+html{background:#e8e8e6}
+body{background:#e8e8e6;color:#101010;font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;overflow-x:hidden}
+#motionField{position:fixed;inset:0;width:100%;height:100%;z-index:0;background:#e8e8e6;opacity:.72;pointer-events:none}
+body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.55),transparent 22%,transparent 78%,rgba(255,255,255,.55)),repeating-linear-gradient(0deg,rgba(0,0,0,.018) 0 1px,transparent 1px 4px);opacity:.5}
+.page{position:relative;z-index:2}
+.hero{min-height:390px;padding:42px 42px 36px;background:#070707;color:#fff;border:1px solid #fff;border-radius:0;box-shadow:12px 12px 0 #111;isolation:isolate}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.96}
+.hero:before{content:"";position:absolute;z-index:1;width:min(76vw,840px);aspect-ratio:1;right:-4%;top:50%;border:1px solid rgba(255,255,255,.48);border-radius:50%;background:transparent;transform:translateY(-50%) rotate(-14deg) scaleY(.37);animation:orbitSpin 28s linear infinite;pointer-events:none}
+.hero:after{content:"";position:absolute;z-index:1;width:min(48vw,520px);aspect-ratio:1;right:11%;top:50%;border:1px dashed rgba(255,255,255,.34);border-radius:50%;background:transparent;transform:translateY(-50%) rotate(11deg) scaleY(.34);animation:orbitSpinReverse 19s linear infinite;pointer-events:none}
+@keyframes orbitSpin{from{transform:translateY(-50%) rotate(-14deg) scaleY(.37)}to{transform:translateY(-50%) rotate(346deg) scaleY(.37)}}
+@keyframes orbitSpinReverse{from{transform:translateY(-50%) rotate(11deg) scaleY(.34)}to{transform:translateY(-50%) rotate(-349deg) scaleY(.34)}}
+.hero-content{position:relative;z-index:3;align-items:flex-end}
+.hero-kicker{font:700 11px/1.2 Consolas,"Courier New",monospace;letter-spacing:.34em;color:#bdbdbd;margin-bottom:18px}
+.eyebrow{border-radius:0;border:1px solid #fff;background:transparent;color:#fff;text-transform:uppercase;letter-spacing:.16em;font:700 10px/1 Consolas,"Courier New",monospace;padding:8px 10px}
+h1{font-family:Georgia,"Times New Roman","Songti SC","SimSun",serif;font-weight:400;letter-spacing:.015em;line-height:1.08;text-shadow:0 0 20px rgba(0,0,0,.8)}
+.hero p{color:#d6d6d6;max-width:690px;font-size:14px;letter-spacing:.04em}
+.hero-stats{gap:0;min-width:372px;border:1px solid #fff;background:rgba(0,0,0,.42);backdrop-filter:blur(4px)}
+.hero-stat{border:0;border-right:1px solid #fff;border-radius:0;background:transparent;padding:18px 13px}
+.hero-stat:last-child{border-right:0}
+.hero-stat b{font-family:Georgia,serif;font-size:28px;font-weight:400}
+.hero-stat span{color:#cfcfcf;letter-spacing:.08em}
+.toolbar{border-radius:0;border:1px solid #111;box-shadow:7px 7px 0 #111;background:rgba(255,255,255,.96)}
+.toolbar-row + .toolbar-row{border-top:1px dashed #9c9c9c}
+.segmented{gap:0}
+.pill,.tab-btn{border-radius:0;background:#fff;color:#222;border:1px solid #111;margin-right:-1px;font-weight:700;letter-spacing:.02em}
+.pill:last-child,.tab-btn:last-child{margin-right:0}
+.pill:hover,.tab-btn:hover{background:#ededed;color:#000;border-color:#000}
+.pill.active,.tab-btn.active{background:#101010;color:#fff;border-color:#101010}
+.pill .count{color:inherit;opacity:.66}
+.control,.search{border-radius:0;background:#fff;border:1px solid #111;color:#333}
+.control select{color:#111}
+.tabs{gap:0}
+.tabs .tab-btn{flex:0 0 auto}
+.panel{border-radius:0;border:1px solid #111;box-shadow:8px 8px 0 #111;background:rgba(255,255,255,.98)}
+.card-stage{background:#fff;overflow:hidden}
+.term-card{position:relative;z-index:0;isolation:isolate}
+.term-card:before{content:"";position:absolute;z-index:-1;inset:7% -4% 4%;background:radial-gradient(circle at 91% 54%,transparent 0 92px,rgba(0,0,0,.08) 94px 95px,transparent 97px),repeating-linear-gradient(0deg,rgba(0,0,0,.045) 0 1px,transparent 1px 24px),repeating-linear-gradient(90deg,rgba(0,0,0,.045) 0 1px,transparent 1px 24px);transform:perspective(700px) rotateY(-6deg);opacity:.9;pointer-events:none}
+.term-label{color:#111;font:700 12px/1.2 Consolas,"Courier New",monospace;letter-spacing:.28em}
+.term-name{font-family:Georgia,"Times New Roman","Songti SC","SimSun",serif;font-weight:400;letter-spacing:.01em;text-shadow:4px 4px 0 rgba(0,0,0,.08)}
+.hint{color:#666;letter-spacing:.03em}
+.answer{border-radius:0;background:#fff;border:1px solid #111;box-shadow:6px 6px 0 #111;position:relative}
+.answer:before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:#111}
+.answer-label{color:#111;letter-spacing:.22em}
+.answer p{color:#111;font-family:"Songti SC","SimSun","Noto Serif CJK SC",serif;font-size:17.5px}
+mark{background:#111;color:#fff;padding:1px 3px;font-weight:700;border-radius:0}
+.keyword{border-radius:0;background:#111;color:#fff;border:1px solid #111}
+.badge{border-radius:0;background:#fff;color:#111;border:1px solid #111;letter-spacing:.04em}
+.badge.course,.badge.must{background:#111;color:#fff;border-color:#111}
+.btn{border-radius:0;background:#111;color:#fff;box-shadow:4px 4px 0 #8c8c8c;border:1px solid #111}
+.btn:hover{background:#000;color:#fff;transform:translate(1px,1px);box-shadow:3px 3px 0 #8c8c8c}
+.btn.secondary{background:#fff;color:#111;border:1px solid #111;box-shadow:4px 4px 0 #b7b7b7}
+.btn.secondary:hover{background:#eee;color:#000;transform:translate(1px,1px)}
+.btn.good{background:#101010;color:#fff}
+.btn.warn{background:#fff;color:#111;border:1px dashed #111;box-shadow:none}
+.btn.danger{background:#fff;color:#111;border:1px solid #111}
+.side{background:#fafafa}
+.progress-bar{background:#ddd;border:1px solid #111;border-radius:0;height:11px}
+.progress-bar>i{background:#101010;border-radius:0}
+.mini-stat{border-radius:0;background:#fff;border:1px solid #111}
+.quick-item{border-radius:0;border:1px solid #bbb;background:#fff}
+.quick-item:hover{border-color:#111;background:#f1f1f1}
+.term-row{border-radius:0;border:1px solid #111;background:#fff}
+.term-row:hover{box-shadow:4px 4px 0 #bbb}
+.hidden-definition{background:repeating-linear-gradient(135deg,#e4e4e4 0 8px,#f7f7f7 8px 16px)!important}
+.quiz-question{border-radius:0;background:#0b0b0b;color:#fff;border:1px solid #111}
+.quiz-question small{color:#d2d2d2}.quiz-question p{color:#fff}
+.option{border-radius:0;border:1px solid #111;background:#fff}
+.option .letter{border-radius:0;background:#111;color:#fff}
+.option.correct{border-color:#111;background:#111}.option.correct .letter{background:#fff;color:#111}
+.option.wrong{border:2px dashed #111;background:#f1f1f1}.option.wrong .letter{background:#666;color:#fff}
+.quiz-feedback,.wrong-item{border-radius:0;border:1px solid #111}.quiz-feedback.good,.quiz-feedback.bad{background:#f1f1f1;color:#111}
+.result .score{color:#111;font-family:Georgia,serif;font-weight:400}
+.overview-card{border-radius:0;border:1px solid #111;background:#fff}
+.project-progress{border-radius:0;border:1px solid #111}.project-progress .bar{background:#ddd;border:1px solid #111}.project-progress .bar>i{background:#111}
+.toast{border-radius:0;background:#111;color:#fff;border:1px solid #fff;box-shadow:5px 5px 0 rgba(0,0,0,.4)}
+.motion-note{position:absolute;right:20px;bottom:16px;z-index:4;color:#aaa;font:700 10px/1.2 Consolas,"Courier New",monospace;letter-spacing:.2em}
+@media(max-width:980px){.hero-stats{border-top:1px solid #fff}.hero:before{width:120vw}.hero:after{width:82vw}}
+@media(max-width:720px){.hero{padding:28px 20px 27px;min-height:430px}.hero-stat b{font-size:23px}.term-card:before{inset:3% -20%}.term-name{font-size:32px}.panel,.toolbar{box-shadow:5px 5px 0 #111}.answer{box-shadow:4px 4px 0 #111}.motion-note{display:none}}
+@media(prefers-reduced-motion:reduce){.hero:before,.hero:after{animation:none!important}#motionField,#heroCanvas{display:none}.content{animation:none}}
+/* ===== Lone Trail Archive Layer ===== */
+.hero{background:#050505;border-color:#f2f2f2}
+.hero-kicker{color:#f0f0f0}
+.hero .scanline{position:absolute;left:0;right:0;top:-2px;height:2px;z-index:5;background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 18px rgba(255,255,255,.8);opacity:.5;animation:scanline 7s linear infinite;pointer-events:none}
+@keyframes scanline{0%{top:6%;opacity:0}12%{opacity:.5}88%{opacity:.35}100%{top:94%;opacity:0}}
+.hud{position:absolute;z-index:5;color:#cfcfcf;font:700 10px/1.2 Consolas,"Courier New",monospace;letter-spacing:.18em;pointer-events:none}
+.hud-tl{top:16px;left:18px}.hud-tr{top:16px;right:18px}.hud-bl{bottom:15px;left:18px}.hud-br{bottom:15px;right:18px}
+.hero:after{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 0 30px rgba(255,255,255,.08)}
+.hero-stat{position:relative}.hero-stat:before{content:"";position:absolute;left:7px;top:7px;width:5px;height:5px;border-left:1px solid #fff;border-top:1px solid #fff}
+.hero-stat:after{content:"";position:absolute;right:7px;bottom:7px;width:5px;height:5px;border-right:1px solid #fff;border-bottom:1px solid #fff}
+.card-stage{background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px),radial-gradient(circle at 88% 46%,transparent 0 118px,rgba(0,0,0,.10) 119px 120px,transparent 121px);background-size:28px 28px,28px 28px,100% 100%}
+.card-stage:after{content:"OBSERVATION DECK / 04";position:absolute;right:13px;bottom:10px;color:#999;font:700 9px/1 Consolas,monospace;letter-spacing:.16em;pointer-events:none}
+.term-card:after{content:"";position:absolute;z-index:-1;left:50%;top:48%;width:86%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.13),transparent);transform:translate(-50%,-50%) rotate(-12deg);pointer-events:none}
+.card-top>span:first-child{font:700 11px/1.2 Consolas,"Courier New",monospace;letter-spacing:.13em}
+.badge{font-family:Consolas,"Microsoft YaHei",sans-serif;font-size:11px}
+.toolbar:before{content:"ARCHIVE FILTER / 观测条件";display:block;color:#777;font:700 9px/1 Consolas,monospace;letter-spacing:.2em;margin-bottom:10px}
+.tabs:before{content:"MODULE";color:#888;font:700 9px/1.2 Consolas,monospace;letter-spacing:.22em;display:block;width:100%;margin-bottom:5px}
+.quiz-question{position:relative}.quiz-question:after{content:"VALIDATION NODE";position:absolute;right:12px;bottom:9px;color:#888;font:700 9px/1 Consolas,monospace;letter-spacing:.18em}
+.overview-card{position:relative}.overview-card:after{content:"DATA";position:absolute;right:6px;top:5px;color:#aaa;font:700 8px/1 Consolas,monospace;letter-spacing:.14em}
+@media(max-width:720px){.hud{font-size:8px}.hud-tl,.hud-tr{top:10px}.hud-bl,.hud-br{bottom:9px}.card-stage:after{display:none}}
+/* ===== Reference Art Fusion / Topographic + Technical Background ===== */
+:root{--ref-blue:#3f6aa5;--ref-sand:#e6b766;--ref-orange:#ef7d3f;--ref-red:#cf3946;--ref-black:#05070b}
+body{background-color:var(--ref-black);background-image:linear-gradient(180deg,rgba(4,6,10,.58),rgba(4,6,10,.9)),url('bg_topo.jpg');background-size:cover;background-position:center 38%;background-attachment:fixed;background-repeat:no-repeat}
+#motionField{background:transparent;opacity:.92}
+body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:url('bg_schematic.jpg') left center/auto 100% no-repeat;opacity:.13;mix-blend-mode:screen}
+body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 52% 38%,transparent 0 32%,rgba(0,0,0,.18) 62%,rgba(0,0,0,.54) 100%),linear-gradient(90deg,rgba(0,0,0,.24),transparent 20%,transparent 80%,rgba(0,0,0,.24))}
+.page{background:linear-gradient(90deg,var(--ref-blue) 0 25%,var(--ref-sand) 25% 50%,var(--ref-orange) 50% 75%,var(--ref-red) 75% 100%) left top/30px 100% no-repeat;padding-left:50px}
+.terrain{position:fixed;left:-8%;right:-8%;bottom:-24px;height:230px;z-index:1;pointer-events:none;opacity:.55;filter:saturate(.9) contrast(1.05);overflow:hidden}
+.terrain i{position:absolute;left:0;bottom:0;width:100%;display:block}
+.terrain .m-blue{height:72%;background:rgba(63,106,165,.74);clip-path:polygon(0 72%,8% 49%,15% 58%,23% 36%,31% 55%,39% 42%,47% 61%,57% 38%,67% 59%,75% 45%,86% 64%,94% 46%,100% 60%,100% 100%,0 100%)}
+.terrain .m-sand{height:58%;background:rgba(230,183,102,.78);clip-path:polygon(0 78%,10% 57%,18% 66%,28% 48%,39% 70%,50% 51%,60% 72%,70% 47%,80% 69%,90% 52%,100% 70%,100% 100%,0 100%);transform:translateY(8px)}
+.terrain .m-orange{height:47%;background:rgba(239,125,63,.86);clip-path:polygon(0 79%,8% 68%,18% 78%,28% 57%,36% 72%,46% 61%,57% 79%,68% 59%,78% 76%,89% 62%,100% 79%,100% 100%,0 100%);transform:translateY(10px)}
+.terrain .m-red{height:34%;background:rgba(207,57,70,.94);clip-path:polygon(0 80%,11% 68%,20% 81%,31% 58%,42% 76%,53% 62%,63% 82%,74% 64%,85% 80%,94% 69%,100% 78%,100% 100%,0 100%);transform:translateY(12px)}
+.hero{background:rgba(4,6,10,.83);backdrop-filter:blur(3px);box-shadow:12px 12px 0 rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.08)}
+.panel,.toolbar{background:#ffffff}
+.panel{box-shadow:8px 8px 0 rgba(5,7,11,.92),inset 4px 0 0 rgba(63,106,165,.16)}
+.card-stage{background:#ffffff;box-shadow:inset 4px 0 0 rgba(63,106,165,.24)}
+.quiz-question{box-shadow:inset 4px 0 0 var(--ref-orange)}
+.answer{box-shadow:6px 6px 0 rgba(5,7,11,.9),inset 4px 0 0 var(--ref-sand)}
+.term-row{box-shadow:inset 3px 0 0 rgba(63,106,165,.18)}
+.badge.course{background:var(--ref-blue);border-color:var(--ref-blue)}
+.badge.must{background:var(--ref-orange);border-color:var(--ref-orange)}
+.tab-btn.active{background:var(--ref-red);border-color:var(--ref-red)}
+.pill.active{background:var(--ref-black);border-color:var(--ref-black)}
+.btn{background:var(--ref-black);border-color:var(--ref-black)}
+.btn.good{background:var(--ref-blue)}
+.btn.warn{background:var(--ref-sand);border-style:solid;border-color:#b98b38;color:#241b09}
+.progress-bar>i{background:linear-gradient(90deg,var(--ref-blue),var(--ref-sand),var(--ref-orange),var(--ref-red))}
+@media(max-width:720px){.page{padding-left:30px;background-size:18px 100%}.terrain{height:150px;opacity:.4}.hero{backdrop-filter:none}}
+/* ===== Interactive Wireframe Sphere ===== */
+#motionField{pointer-events:auto;cursor:grab;touch-action:none;opacity:1;background:transparent}
+#motionField:active{cursor:grabbing}
+.sphere-help{position:fixed;left:50%;bottom:13px;transform:translateX(-50%);z-index:5;padding:6px 11px;border:1px solid rgba(255,255,255,.38);background:rgba(4,6,10,.68);color:#d7d7d7;font:700 9px/1.2 Consolas,"Courier New",monospace;letter-spacing:.16em;pointer-events:none;white-space:nowrap}
+.sphere-help.paused{color:#ef7d3f;border-color:rgba(239,125,63,.7)}
+.sphere-help.paused:before{content:"PAUSED · ";color:#ef7d3f}
+body{background-image:linear-gradient(180deg,rgba(4,6,10,.74),rgba(4,6,10,.94)),url('bg_topo.jpg')}
+body:before{opacity:.08}
+.terrain{opacity:.32}
+@media(max-width:720px){.sphere-help{bottom:7px;font-size:8px;letter-spacing:.1em}.sphere-help:before{display:none}}
+/* ===== Geodesic Sphere Reference Refinement ===== */
+body{background-color:#06171c;background-image:radial-gradient(ellipse at 78% 48%,#173f47 0,#0c2930 38%,#06171c 70%,#030b0f 100%),linear-gradient(rgba(3,10,14,.9),rgba(3,10,14,.95)),url('bg_topo.jpg');background-size:auto,auto,cover;background-position:center,center,center 38%;background-attachment:fixed,fixed,fixed;background-repeat:no-repeat,no-repeat,no-repeat}
+body:before{opacity:.035}
+body:after{background:radial-gradient(circle at 78% 48%,transparent 0 16%,rgba(0,0,0,.12) 46%,rgba(0,0,0,.52) 100%)}
+.terrain{opacity:.11}
+.page{background:linear-gradient(90deg,var(--ref-blue) 0 25%,var(--ref-sand) 25% 50%,var(--ref-orange) 50% 75%,var(--ref-red) 75% 100%) left top/20px 100% no-repeat;padding-left:40px}
+.hero{background:rgba(4,15,19,.84)}
+.sphere-help{color:#d9f2f5;border-color:rgba(173,232,237,.4);background:rgba(4,17,21,.78)}
+.sphere-help.paused{color:#ef7d3f;border-color:rgba(239,125,63,.7)}
+@media(max-width:720px){.page{padding-left:27px;background-size:14px 100%}.terrain{opacity:.08}}
+/* ===== Orbital Hub / Level One ===== */
+#motionField{display:none!important}
+.back-hub{display:none;align-items:center;gap:8px;margin:18px 0 10px;padding:9px 14px;border:1px solid #111;background:#fff;color:#111;font:700 12px/1 Consolas,"Microsoft YaHei",sans-serif;letter-spacing:.08em;box-shadow:4px 4px 0 #111}
+.back-hub:hover{background:#111;color:#fff}
+.hub-view{display:block;margin:18px 0 16px;padding:0;overflow:hidden;background:#06191f}
+.hub-stage{position:relative;height:720px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,#16414a 0,#0b2931 38%,#06171c 70%,#030b0f 100%)}
+#hubSphereCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;cursor:grab;touch-action:none}
+#hubSphereCanvas:active{cursor:grabbing}
+.orbit-layer{position:absolute;inset:0;z-index:2;pointer-events:none}
+.orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed rgba(180,236,241,.25);border-radius:50%;box-shadow:0 0 18px rgba(75,173,187,.05);pointer-events:none}
+.satellite{position:absolute;left:50%;top:50%;width:62px;height:62px;border:1px solid rgba(190,240,244,.72);border-radius:50%;background:rgba(4,18,23,.88);color:#efffff;box-shadow:0 0 0 4px rgba(4,18,23,.45),0 0 22px rgba(90,204,218,.18);pointer-events:auto;display:grid;place-items:center;z-index:3;transition:background .18s,box-shadow .18s,color .18s;transform:translate(-50%,-50%)}
+.satellite:hover{background:#eafcff;color:#071d23;box-shadow:0 0 0 5px rgba(4,18,23,.4),0 0 30px rgba(111,226,237,.55)}
+.sat-index{font:700 14px/1 Consolas,"Courier New",monospace;letter-spacing:.08em}
+.sat-label{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);white-space:nowrap;padding:4px 8px;border:1px solid rgba(190,240,244,.35);background:rgba(4,18,23,.82);color:#dff9fb;font:700 11px/1.1 "Microsoft YaHei",sans-serif;letter-spacing:.08em}
+.satellite:hover .sat-label{background:#eafcff;color:#071d23;border-color:#eafcff}
+.hub-center-label{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);text-align:center;color:#eafcff;pointer-events:none;text-shadow:0 0 16px rgba(4,18,23,.95)}
+.hub-center-label span,.hub-center-label small{display:block;font:700 9px/1.2 Consolas,"Courier New",monospace;letter-spacing:.2em;color:rgba(223,249,251,.7)}
+.hub-center-label b{display:block;font:400 48px/1 Georgia,serif;margin:4px 0 2px;color:#fff;text-shadow:0 0 20px rgba(120,224,235,.6)}
+.hub-help{padding:10px 14px;border-top:1px solid rgba(255,255,255,.12);background:#06191f;color:#a6c8cc;text-align:center;font:700 10px/1.2 Consolas,"Microsoft YaHei",monospace;letter-spacing:.13em}
+@media(max-width:720px){.hub-stage{height:540px}.satellite{width:52px;height:52px}.sat-index{font-size:12px}.sat-label{font-size:9px;padding:3px 6px}.hub-center-label b{font-size:38px}.hub-help{font-size:8px;letter-spacing:.08em}.back-hub{margin-top:12px}}
+/* ===== Black Surface + Compact Satellites ===== */
+html,body{background:#000!important;background-image:none!important}
+body:before{opacity:.018!important}
+body:after{background:radial-gradient(circle at 50% 46%,transparent 0 22%,rgba(0,0,0,.52) 68%,#000 100%)!important}
+.terrain{display:none!important}
+.hub-view,.hub-stage{background:#000!important}
+.hub-stage{background-image:radial-gradient(ellipse at 50% 50%,#0d0d0d 0,#030303 48%,#000 100%)!important}
+.hero{background:rgba(0,0,0,.9)!important}
+.orbit-ring{border-color:rgba(255,255,255,.17);box-shadow:0 0 16px rgba(255,255,255,.025)}
+.satellite{width:46px!important;height:46px!important;border-color:rgba(235,245,246,.68);box-shadow:0 0 0 3px rgba(0,0,0,.52),0 0 16px rgba(255,255,255,.12)}
+.satellite:hover{box-shadow:0 0 0 4px rgba(0,0,0,.5),0 0 22px rgba(255,255,255,.36)}
+.sat-index{font-size:11px!important}
+.sat-label{top:calc(100% + 5px);padding:3px 6px;font-size:9px;letter-spacing:.05em}
+.hub-center-label b{font-size:42px}
+.hub-help{background:#000;border-top-color:rgba(255,255,255,.08)}
+@media(max-width:720px){.satellite{width:38px!important;height:38px!important}.sat-index{font-size:9px!important}.sat-label{font-size:8px;padding:2px 5px}.hub-center-label b{font-size:34px}}
+/* ===== Satellite To Secondary Menu Transition ===== */
+.transition-overlay{position:fixed;inset:0;z-index:120;pointer-events:none;visibility:hidden}
+.transition-overlay.active{visibility:visible;pointer-events:auto}
+.transition-iris{position:absolute;inset:0;background:#000;clip-path:circle(0px at var(--tx,50%) var(--ty,50%));transition:clip-path .66s cubic-bezier(.68,0,.22,1),opacity .32s ease;opacity:1}
+.transition-overlay.active .transition-iris{clip-path:circle(150vmax at var(--tx,50%) var(--ty,50%))}
+.transition-overlay.reveal .transition-iris{opacity:0}
+.transition-copy{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#fff;opacity:0;transition:opacity .22s ease,transform .5s ease}
+.transition-overlay.active .transition-copy{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.transition-copy b{display:block;font:400 64px/1 Georgia,serif;letter-spacing:.04em;text-shadow:0 0 24px rgba(255,255,255,.35)}
+.transition-copy span{display:block;margin-top:12px;font:700 11px/1.2 Consolas,"Courier New",monospace;letter-spacing:.3em;color:#d9f2f5}
+.transition-copy:before{content:"";position:absolute;left:50%;top:50%;width:220px;height:220px;border:1px dashed rgba(255,255,255,.45);border-radius:50%;transform:translate(-50%,-50%);animation:transitionRing 1.1s linear infinite}
+@keyframes transitionRing{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(max-width:720px){.transition-copy b{font-size:46px}.transition-copy:before{width:160px;height:160px}}
+/* ===== Black Satellite Surfaces ===== */
+.satellite{background:#000!important;color:#fff!important}
+.satellite:hover,.satellite:focus-visible{background:#000!important;color:#fff!important;box-shadow:0 0 0 4px rgba(0,0,0,.65),0 0 28px rgba(255,255,255,.48)!important}
+.sat-label{background:#000!important;color:#fff!important;border-color:rgba(255,255,255,.55)!important}
+.satellite:hover .sat-label,.satellite:focus-visible .sat-label{background:#000!important;color:#fff!important;border-color:#fff!important}
+/* ===== Sphere Layer Above Satellites ===== */
+.orbit-layer{z-index:2!important}
+#hubSphereCanvas{z-index:3!important;pointer-events:none!important}
+.hub-center-label{z-index:4!important}
+#hubStage{cursor:grab;touch-action:none}
+#hubStage:active{cursor:grabbing}
+/* ===== Smaller Orbit Satellites ===== */
+.satellite{width:38px!important;height:38px!important;box-shadow:0 0 0 3px rgba(0,0,0,.58),0 0 13px rgba(255,255,255,.12)!important}
+.satellite:hover,.satellite:focus-visible{box-shadow:0 0 0 3px rgba(0,0,0,.62),0 0 20px rgba(255,255,255,.4)!important}
+.sat-index{font-size:9px!important}
+.sat-label{top:calc(100% + 3px)!important;padding:2px 5px!important;font-size:8px!important;letter-spacing:.03em!important}
+@media(max-width:720px){.satellite{width:32px!important;height:32px!important}.sat-index{font-size:8px!important}.sat-label{font-size:7px!important;padding:1px 4px!important}}
+/* ===== iOS Standalone / Safe Area ===== */
+html,body{min-height:100%;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+@media(max-width:720px){
+  .page{padding-top:calc(14px + env(safe-area-inset-top));padding-right:calc(11px + env(safe-area-inset-right));padding-bottom:calc(38px + env(safe-area-inset-bottom));padding-left:calc(27px + env(safe-area-inset-left))}
+  .hub-view{margin-left:calc(-1 * env(safe-area-inset-left));margin-right:calc(-1 * env(safe-area-inset-right))}
+  .transition-copy{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+}
+</style>
+</head>
+<body class="view-hub">
+<canvas id="motionField" aria-hidden="true"></canvas>
+<div class="terrain" aria-hidden="true"><i class="m-blue"></i><i class="m-sand"></i><i class="m-orange"></i><i class="m-red"></i></div>
+
+<div class="page">
+  <header class="hero">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="scanline" aria-hidden="true"></div>
+    <div class="hud hud-tl">OBS-01 // ACTIVE</div>
+    <div class="hud hud-tr">SIGNAL 98.7%</div>
+    <div class="hud hud-bl">SECTOR 04 // NODE 208</div>
+    <div class="hud hud-br">T+ 00:00:12</div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-kicker">LONE TRAIL ARCHIVE / STAR CHART / 2026</div>
+        <span class="eyebrow">● 离线学习程序 · 依据现有教案与课件整理</span>
+        <h1>孤星档案.<br>名词记忆系统</h1>
+        <p>把需要背的名词解释集中到一张张卡片里。先看名词，再回忆释义；用“记熟了／还需复习”管理进度，最后通过随机抽背和闯关测验检验掌握情况。</p>
+        <div class="motion-note">PERSPECTIVE / ORBIT / TYPE</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b id="heroTotal">0</b><span>名词总数</span></div>
+        <div class="hero-stat"><b id="heroMust">0</b><span>重点必背</span></div>
+        <div class="hero-stat"><b id="heroDone">0</b><span>已记熟</span></div>
+      </div>
+    </div>
+  </header>
+  <button class="back-hub" id="backHub">← 返回一级页面</button>
+  <section class="hub-view panel" id="hubView">
+    <div class="hub-stage" id="hubStage">
+      <canvas id="hubSphereCanvas" aria-label="可拖动的三角网格球体"></canvas>
+      <div class="orbit-layer" id="orbitLayer">
+        <i class="orbit-ring" data-k="0"></i><i class="orbit-ring" data-k="1"></i><i class="orbit-ring" data-k="2"></i><i class="orbit-ring" data-k="3"></i><i class="orbit-ring" data-k="4"></i>
+        <button class="satellite" data-action="card" data-k="0" data-speed="0.00016" data-phase="0"><span class="sat-index">01</span><span class="sat-label">名词速记</span></button>
+        <button class="satellite" data-action="list" data-k="1" data-speed="0.00016" data-phase="1.25"><span class="sat-index">02</span><span class="sat-label">背诵清单</span></button>
+        <button class="satellite" data-action="random" data-k="2" data-speed="0.00016" data-phase="2.5"><span class="sat-index">03</span><span class="sat-label">随机抽背</span></button>
+        <button class="satellite" data-action="quiz" data-k="3" data-speed="0.00016" data-phase="3.75"><span class="sat-index">04</span><span class="sat-label">闯关测验</span></button>
+        <button class="satellite" data-action="progress" data-k="4" data-speed="0.00016" data-phase="5"><span class="sat-index">05</span><span class="sat-label">学习进度</span></button>
+      </div>
+      <div class="hub-center-label"><span>MEMORY CORE</span><b>208</b><small>NUMERICAL NODES</small></div>
+    </div>
+    <div class="hub-help">拖动球体旋转 · 单击暂停 · 双击复位 · 点击轨道卫星进入功能</div>
+  </section>
+  <section class="toolbar" aria-label="筛选条件">
+    <div class="toolbar-row">
+      <div class="segmented" id="coursePills"></div>
+      <label class="control">项目筛选<select id="projectSelect"></select></label>
+    </div>
+    <div class="toolbar-row">
+      <label class="search">⌕ <input id="searchInput" type="search" placeholder="搜索名词、释义或关键词"></label>
+      <label class="switch"><input id="mustOnly" type="checkbox"> 只看重点必背</label>
+    </div>
+  </section>
+  <nav class="tabs" id="tabs"></nav>
+  <main class="content" id="content"></main>
+  <div class="footer">数据来自现有《市场营销》《营销策划实务（第2版）》《推销实务（第2版）》课件与教案，已按复习用途整理精简。学习进度保存在本机浏览器中。</div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="transition-overlay" id="transitionOverlay" aria-hidden="true"><div class="transition-iris"></div><div class="transition-copy"><b id="transitionIndex">01</b><span id="transitionTitle">名词速记</span></div></div>
+
+<script>
+const DATA = {"courses":[{"course":"市场营销","short":"营销基础","description":"依据《市场营销》项目一至项目九课件整理，重点覆盖核心概念、市场分析、4P策略与创新营销。"},{"course":"营销策划实务","short":"策划","description":"依据《营销策划实务（第2版）》现有课件整理，突出策划概念、定位、渠道、推广和策划书编写。"},{"course":"推销实务","short":"推销","description":"依据《推销实务（第2版）》教学教案整理，覆盖推销流程、客户开发、洽谈、异议处理、成交、回款与网络推销。"}],"terms":[{"project":"项目一 感悟市场营销","term":"市场","definition":"从营销角度看，市场是某种产品所有现实与潜在需求的集合，由人口、购买力和购买欲望三个要素构成。","key":["现实与潜在需求","人口、购买力和购买欲望"],"must":true,"id":"市场营销::001","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"需要","definition":"人们没有得到某些基本满足时的感受状态，如对食物、衣服、住所、安全、爱情等方面的需要。","key":["没有得到","感受状态"],"must":true,"id":"市场营销::002","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"欲望","definition":"人们希望使某些基本需要得到具体满足的愿望。与需要相比，欲望具有明确的指向性和选择性。","key":["具体满足","指向性和选择性"],"must":true,"id":"市场营销::003","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"需求","definition":"人们有能力购买，并且愿意购买某个具体产品的欲望。","key":["有能力购买","愿意购买"],"must":true,"id":"市场营销::004","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"交换","definition":"以提供某种东西为回报，从别人那里取得所需物品的行为和过程，是市场营销的核心概念。","key":["提供某种东西为回报","取得所需物品"],"must":true,"id":"市场营销::005","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"交易","definition":"买卖双方以货币为媒介的价值交换过程。","key":["货币为媒介","价值交换"],"must":true,"id":"市场营销::006","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"市场营销","definition":"以满足消费者需求为出发点，综合运用各种战略和手段，把产品和劳务销售给消费者，并最终实现企业自身目标的经营活动。","key":["满足消费者需求","综合运用","实现企业目标"],"must":true,"id":"市场营销::007","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"市场营销组合","definition":"企业针对目标市场的需要，综合考虑环境、能力、竞争状况，对可控制的各种营销因素进行优化组合和综合运用。核心是4P：产品、价格、渠道、促销。","key":["目标市场需要","可控制的营销因素","4P"],"must":true,"id":"市场营销::008","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"生产观念","definition":"以生产为中心，认为消费者可以接受任何买得到并买得起的产品，企业只要提高产量、降低生产成本就可以获得利润。","key":["以生产为中心","提高产量","降低成本"],"must":true,"id":"市场营销::009","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"产品观念","definition":"以产品为中心，认为只要产品质量好、技术独到，消费者自然会购买。","key":["以产品为中心","质量好","技术独到"],"must":true,"id":"市场营销::010","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"推销观念","definition":"认为消费者不会主动购买非必需产品，企业必须通过有效的人员推销和促销手段刺激、诱导消费者购买。","key":["非必需产品","刺激和诱导"],"must":true,"id":"市场营销::011","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"市场营销观念","definition":"以消费者需要为中心，认为企业应生产消费者需要的东西，经典口号是“顾客至上”“顾客就是上帝”。","key":["消费者需要为中心","顾客至上"],"must":true,"id":"市场营销::012","course":"市场营销"},{"project":"项目一 感悟市场营销","term":"社会市场营销观念","definition":"要求企业在满足消费者需求、取得合理利润的同时承担社会责任，正确处理消费者需求、企业利润和社会利益之间的矛盾。","key":["承担社会责任","消费者需求","企业利润","社会利益"],"must":true,"id":"市场营销::013","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"市场营销环境","definition":"又称营销环境，是指影响企业市场营销活动的一切参与者和外在影响力，一般分为宏观环境和微观环境。","key":["参与者和外在影响力","宏观环境","微观环境"],"must":true,"id":"市场营销::014","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"市场营销宏观环境","definition":"影响企业市场营销活动的巨大社会力量和自然力量，包括人口、经济、政治与法律、社会文化、自然环境及科学技术等因素。","key":["巨大社会力量和自然力量","人口","经济","社会文化"],"must":true,"id":"市场营销::015","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"市场营销微观环境","definition":"与企业紧密相连、直接影响其市场营销活动的各种参与者，包括企业本身、供应商、营销中介、消费者、竞争者和公众。","key":["紧密相连","直接影响","供应商","营销中介","消费者"],"must":true,"id":"市场营销::016","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"人口环境","definition":"人口的数量、结构、地理分布等相关情况。人口的多少直接影响市场的潜在容量。","key":["数量","结构","地理分布"],"must":false,"id":"市场营销::017","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"经济环境","definition":"企业市场营销活动所面临的外部社会经济条件，主要包括消费者收入、支出模式、消费结构、储蓄与信贷以及社会经济水平等。","key":["外部社会经济条件","消费者收入","消费结构"],"must":false,"id":"市场营销::018","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"恩格尔系数","definition":"食品支出额占消费支出总额的百分比，是衡量一个国家、地区、城市或家庭贫富程度和生活水平的重要指标。系数越大，生活水平越低。","key":["食品支出额","消费支出总额","越大，生活水平越低"],"must":true,"id":"市场营销::019","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"社会文化环境","definition":"一个国家或地区长期形成的民族特征、价值观念、宗教信仰、生活方式、风俗习惯、伦理道德、语言文字等的总和。","key":["民族特征","价值观念","风俗习惯"],"must":false,"id":"市场营销::020","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"自然环境","definition":"自然界提供给人类的各种形式的物质财富，即自然资源，如矿产资源、森林资源、土地资源和水力资源等。","key":["自然资源","物质财富"],"must":false,"id":"市场营销::021","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"科学技术环境","definition":"企业在产品设计、开发、制造和营销过程中所受到的科技发展的影响。","key":["科技发展","影响"],"must":false,"id":"市场营销::022","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"供应商","definition":"向企业及其竞争者提供生产产品和服务所需资源的企业或个人。","key":["提供资源","企业或个人"],"must":true,"id":"市场营销::023","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"营销中介","definition":"协助企业推广、销售和分配产品给最终买主的企业或个人，包括中间商、实体分配公司、营销服务机构和金融机构等。","key":["推广、销售和分配","最终买主"],"must":true,"id":"市场营销::024","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"公众","definition":"对企业实现市场营销目标的能力有着实际或潜在利益关系和影响力的群体或个人。","key":["实际或潜在利益关系","影响力"],"must":true,"id":"市场营销::025","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"愿望竞争者","definition":"提供不同产品、满足不同需求的竞争者。","key":["不同产品","不同需求"],"must":false,"id":"市场营销::026","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"平行竞争者","definition":"提供不同的产品以满足相同需求的竞争者。","key":["不同产品","相同需求"],"must":false,"id":"市场营销::027","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"产品形式竞争者","definition":"生产同类但规格、型号、款式不同的产品的竞争者。","key":["同类产品","规格、型号、款式不同"],"must":false,"id":"市场营销::028","course":"市场营销"},{"project":"项目二 市场营销环境分析","term":"品牌竞争者","definition":"生产相同规格、型号、款式的产品，但品牌不同的竞争者。","key":["规格、型号、款式相同","品牌不同"],"must":false,"id":"市场营销::029","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"消费品市场","definition":"又称消费者市场或生活资料市场，是指由个人或家庭为满足生活需求所购买的商品和服务形成的市场。","key":["个人或家庭","满足生活需求"],"must":true,"id":"市场营销::030","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"便利品","definition":"消费者购买频繁，不愿花时间和精力比较品牌、价格，希望随时随地能购买到的产品或服务。","key":["购买频繁","不愿比较","随时随地"],"must":true,"id":"市场营销::031","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"选购品","definition":"消费者对产品或服务的价格、质量、款式、耐用性等进行比较之后才购买的产品或服务。","key":["进行比较","价格、质量、款式"],"must":true,"id":"市场营销::032","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"特殊品","definition":"具有独特品质特色或拥有著名品牌的产品，一般价格高、档次高、使用寿命长。","key":["独特品质特色","著名品牌","价格高"],"must":true,"id":"市场营销::033","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"非渴求品","definition":"消费者目前尚不了解，或者即使了解也不打算购买的产品。","key":["尚不了解","不打算购买"],"must":true,"id":"市场营销::034","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"相关群体","definition":"能够直接或间接影响消费者的消费态度、价值观念和购买行为的个人或集体。","key":["直接或间接影响","消费态度","购买行为"],"must":true,"id":"市场营销::035","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"社会阶层","definition":"社会学家根据职业、收入来源、教育水平、价值观等对人们进行的一种社会分类，同一阶层成员具有相似的价值观、兴趣和行为。","key":["职业","收入来源","教育水平","相似的价值观"],"must":true,"id":"市场营销::036","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"购买动机","definition":"由需要引起的、推动人们实施购买行为的内在驱动力。","key":["需要引起","内在驱动力"],"must":true,"id":"市场营销::037","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"知觉","definition":"外界刺激作用于人体感官时，人脑对外界感觉信息的看法和理解。","key":["外界刺激","感官","看法和理解"],"must":true,"id":"市场营销::038","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"信念","definition":"人们在思想上对某种事物所持有的看法和评价，具体表现为信任程度的强弱。","key":["看法和评价","信任程度"],"must":false,"id":"市场营销::039","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"态度","definition":"人们对某种事物的倾向性评价，例如对产品商标、外观、质量以及企业经营方式所持的看法。","key":["倾向性评价"],"must":false,"id":"市场营销::040","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"购后行为","definition":"消费者在购买产品以后产生的某种程度的满意或不满意所带来的一系列行为表现。","key":["购买以后","满意或不满意","行为表现"],"must":false,"id":"市场营销::041","course":"市场营销"},{"project":"项目三 消费品市场分析","term":"消费者购买行为“7O”分析法","definition":"从购买者、购买对象、购买目的、购买组织、购买方式、购买时间和购买地点七个方面分析消费者购买行为的方法。","key":["7个方面","购买者","购买对象","购买目的"],"must":true,"id":"市场营销::042","course":"市场营销"},{"project":"项目四 确定目标市场","term":"市场细分","definition":"企业通过市场调研，根据消费者需求的差异性，把整体市场及全部消费者和潜在消费者划分为若干个子市场的过程。","key":["市场调研","需求差异性","若干子市场"],"must":true,"id":"市场营销::043","course":"市场营销"},{"project":"项目四 确定目标市场","term":"目标市场","definition":"在市场细分的基础上，企业决定要进入的最佳市场部分或子市场。","key":["市场细分基础上","最佳市场部分"],"must":true,"id":"市场营销::044","course":"市场营销"},{"project":"项目四 确定目标市场","term":"无差异性市场策略","definition":"用一种产品和一套营销组合方案来迎合消费者群体中的大多数人，把整体市场看作一个大的目标市场。","key":["一种产品","一套营销组合","大多数人"],"must":true,"id":"市场营销::045","course":"市场营销"},{"project":"项目四 确定目标市场","term":"差异性市场策略","definition":"企业把整体市场划分为几个细分市场，针对不同细分市场的特征设计营销策略，分别满足不同消费者群的需要。","key":["划分细分市场","不同营销策略"],"must":true,"id":"市场营销::046","course":"市场营销"},{"project":"项目四 确定目标市场","term":"集中性市场策略","definition":"企业集中力量进入一个或少数几个细分市场，开发一种专业性产品，满足特定消费者的需要。","key":["集中力量","一个或少数几个细分市场","专业性产品"],"must":true,"id":"市场营销::047","course":"市场营销"},{"project":"项目四 确定目标市场","term":"市场定位","definition":"企业根据市场特性和自身特点，把本企业的产品塑造成强有力的、与众不同的形象，并传递给目标消费者，最终在市场竞争中获得优势的过程。","key":["与众不同","传递给目标消费者","获得优势"],"must":true,"id":"市场营销::048","course":"市场营销"},{"project":"项目四 确定目标市场","term":"属性定位","definition":"企业根据产品有关特性来定位，包括原料、技术、配方、设备、产品功能、产地和历史等因素。","key":["产品特性","原料、技术、功能"],"must":false,"id":"市场营销::049","course":"市场营销"},{"project":"项目四 确定目标市场","term":"利益定位","definition":"强调产品能够给消费者带来的利益和附加价值，而不是产品或服务的具体特征。","key":["利益","附加价值"],"must":false,"id":"市场营销::050","course":"市场营销"},{"project":"项目四 确定目标市场","term":"比附定位","definition":"以竞争者的品牌为参照物，借其品牌之光使自己的品牌生辉，定位对象通常是行业领先者。","key":["竞争者品牌为参照物","行业领先者"],"must":false,"id":"市场营销::051","course":"市场营销"},{"project":"项目四 确定目标市场","term":"避强定位策略","definition":"企业避开实力最强或较强的竞争对手，将自己的产品定位于市场的空白处。","key":["避开强竞争者","市场空白处"],"must":false,"id":"市场营销::052","course":"市场营销"},{"project":"项目四 确定目标市场","term":"对抗性定位策略","definition":"企业根据自身实力，与在市场上占据支配地位的竞争对手“对着干”的定位方式。","key":["自身实力","对着干"],"must":false,"id":"市场营销::053","course":"市场营销"},{"project":"项目四 确定目标市场","term":"重新定位策略","definition":"产品在原有定位基础上的二次定位，通常由市场变化、消费者需求变化、竞争加剧或企业竞争优势改变等因素引起。","key":["二次定位","原有定位基础"],"must":false,"id":"市场营销::054","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品整体概念","definition":"现代营销学认为，产品是能够提供给市场，被人们使用和消费，并能满足某种需要的有形物质或无形物质的有机体，包括功能、利益、状态、服务、人员、组织、观念等要素。","key":["有形物质或无形物质","满足需要","整体概念"],"must":true,"id":"市场营销::055","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品核心","definition":"消费者追求的最基本内容，也是他们真正要购买的东西，主要向购买者提供基本效用或利益，是产品整体概念中最基本的层次。","key":["最基本内容","基本效用或利益","最基本层次"],"must":true,"id":"市场营销::056","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品形式","definition":"产品核心的外部特征，即产品呈现在市场上的具体形态，主要包括品牌商标、包装、款式颜色、特色和质量等。","key":["外部特征","具体形态","品牌商标","包装"],"must":true,"id":"市场营销::057","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品延伸","definition":"又称附加产品、扩大产品，是消费者取得产品或使用产品过程中，除产品基本效用和功能之外的一切服务与利益的总和，主要包括运送、安装、维修等。","key":["附加产品","基本效用之外","服务与利益"],"must":true,"id":"市场营销::058","course":"市场营销"},{"project":"项目五 制定产品策略","term":"品牌","definition":"用以识别某个销售者或某群销售者的产品或服务，并使之与竞争对手的产品或服务区别开来的商业名称及标志。","key":["识别","区别于竞争对手","商业名称及标志"],"must":true,"id":"市场营销::059","course":"市场营销"},{"project":"项目五 制定产品策略","term":"商标","definition":"经过政府部门注册登记的品牌或品牌中的一部分，注册后享有独占权和专用权，受法律保护。","key":["注册登记","独占权和专用权","法律保护"],"must":true,"id":"市场营销::060","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品生命周期","definition":"简称PLC，是产品的市场寿命，指一种产品从进入市场开始到被淘汰退出市场的时间间隔，包括投入期、成长期、成熟期和衰退期。","key":["进入市场","退出市场","四个阶段"],"must":true,"id":"市场营销::061","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品使用寿命","definition":"产品从开始使用到报废为止所持续的时间，即产品的耐用程度。","key":["开始使用","报废","耐用程度"],"must":true,"id":"市场营销::062","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品组合","definition":"企业生产经营的产品线和产品项目的集合，即企业的业务经营范畴。","key":["产品线","产品项目","集合"],"must":true,"id":"市场营销::063","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品线","definition":"在结构、功能上密切相关，能满足消费者需求的一组产品，每条产品线内部包括若干个产品项目。","key":["结构、功能密切相关","一组产品"],"must":true,"id":"市场营销::064","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品项目","definition":"产品线中各种不同品种、规格、型号、质量和价格的特定产品。","key":["不同品种、规格、型号","特定产品"],"must":true,"id":"市场营销::065","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品组合四要素","definition":"产品组合宽度指产品线数量；长度指各条产品线包含的产品项目总和；深度指产品项目具有的不同花色、口味、规格等数量；关联度指不同产品在最终用途、生产制造、销售渠道等方面的相关程度。","key":["宽度","长度","深度","关联度"],"must":true,"id":"市场营销::066","course":"市场营销"},{"project":"项目五 制定产品策略","term":"新产品类型","definition":"主要包括全新型、换代型、改进型和仿制型新产品。全新型采用新原理、新技术、新材料；换代型改变核心部分；改进型不改变核心；仿制型为本地区或本企业初次仿制。","key":["全新型","换代型","改进型","仿制型"],"must":true,"id":"市场营销::067","course":"市场营销"},{"project":"项目五 制定产品策略","term":"产品包装","definition":"产品的直接容器或包装物，具有保护产品、促进销售、增加产品价值、方便消费和便于流通等功能。","key":["保护产品","促进销售","增加价值"],"must":true,"id":"市场营销::068","course":"市场营销"},{"project":"项目六 选择定价策略","term":"定价目标","definition":"企业通过特定水平的价格以及价格产生的效应所要达到的预期目的。","key":["特定水平价格","预期目的"],"must":true,"id":"市场营销::069","course":"市场营销"},{"project":"项目六 选择定价策略","term":"成本加成定价法","definition":"在单位成本基础上加上一定比例的预期利润和税金，以构成价格的一种定价方法。","key":["单位成本","预期利润和税金"],"must":true,"id":"市场营销::070","course":"市场营销"},{"project":"项目六 选择定价策略","term":"目标利润定价法","definition":"根据估计的销量来制定价格，以达到预期目标利润的一种定价方法。","key":["估计销量","目标利润"],"must":true,"id":"市场营销::071","course":"市场营销"},{"project":"项目六 选择定价策略","term":"边际贡献定价法","definition":"只计算变动成本、不计算固定成本时所得到的产品价格的一种定价方法。边际贡献是产品价格与产品变动成本的差额。","key":["只计算变动成本","价格与变动成本的差额"],"must":true,"id":"市场营销::072","course":"市场营销"},{"project":"项目六 选择定价策略","term":"理解价值定价法","definition":"以消费者对产品价值的理解度为定价依据，运用营销策略影响消费者对商品价值的认知，再根据商品在消费者心目中的价值制定价格。","key":["消费者理解度","定价依据"],"must":true,"id":"市场营销::073","course":"市场营销"},{"project":"项目六 选择定价策略","term":"撇脂定价策略","definition":"又称高价策略，在新产品上市之初把价格定得较高，以便短期内获取高额利润、尽快收回投资，然后再逐步降低价格。","key":["新产品上市","高价","短期获取厚利","逐步降价"],"must":true,"id":"市场营销::074","course":"市场营销"},{"project":"项目六 选择定价策略","term":"渗透定价策略","definition":"将新产品投入市场时把价格定得尽可能低，以获取最高销量和最大市场占有率。","key":["新产品","价格尽可能低","最高销量","最大市场占有率"],"must":true,"id":"市场营销::075","course":"市场营销"},{"project":"项目六 选择定价策略","term":"满意定价策略","definition":"介于撇脂定价策略和渗透定价策略之间的中间价格策略，比撇脂价格低、比渗透价格高，使生产者和消费者都比较满意。","key":["中间价格","生产者和消费者","都比较满意"],"must":true,"id":"市场营销::076","course":"市场营销"},{"project":"项目六 选择定价策略","term":"心理定价策略","definition":"利用消费者心理因素制定价格的策略，主要包括声望定价、尾数定价、整数定价、习惯性定价和招徕定价等。","key":["消费者心理","声望定价","尾数定价","招徕定价"],"must":true,"id":"市场营销::077","course":"市场营销"},{"project":"项目六 选择定价策略","term":"声望定价策略","definition":"对名牌产品利用消费者仰慕名牌的心理，制定大大高于其他同类产品价格的策略。","key":["名牌产品","仰慕名牌心理","高于同类产品"],"must":true,"id":"市场营销::078","course":"市场营销"},{"project":"项目六 选择定价策略","term":"尾数定价策略","definition":"对日常用品或低档产品保留价格尾数，用零头数标价，以满足消费者的求实心理。","key":["保留价格尾数","零头数标价","求实心理"],"must":true,"id":"市场营销::079","course":"市场营销"},{"project":"项目六 选择定价策略","term":"差别定价策略","definition":"根据顾客、销售地点、需求时间、产品形式、服务部位和用途等环境差异，对同种产品制定不同价格，以适应消费者不同要求。","key":["环境不同","同种产品","不同价格"],"must":true,"id":"市场营销::080","course":"市场营销"},{"project":"项目六 选择定价策略","term":"地区定价策略","definition":"企业根据产销地的远近、交货时间的长短和运输费用的分担，制定不同价格的策略。","key":["产销地远近","交货时间","运输费用"],"must":true,"id":"市场营销::081","course":"市场营销"},{"project":"项目六 选择定价策略","term":"现金折扣","definition":"企业对及时付清货款的购买者给予的一种价格折扣。","key":["及时付清货款","价格折扣"],"must":true,"id":"市场营销::082","course":"市场营销"},{"project":"项目六 选择定价策略","term":"数量折扣","definition":"企业给大量购买某种产品的消费者的一种折扣，以鼓励消费者购买更多货物。","key":["大量购买","鼓励增加购买量"],"must":true,"id":"市场营销::083","course":"市场营销"},{"project":"项目六 选择定价策略","term":"功能折扣","definition":"又称交易折扣，是制造商给予中间商的一种额外折扣，以促使中间商执行某种市场交易功能。","key":["交易折扣","制造商","中间商"],"must":true,"id":"市场营销::084","course":"市场营销"},{"project":"项目六 选择定价策略","term":"季节折扣","definition":"企业给购买过季产品的消费者的一种减价，以鼓励消费者在淡季购买，使生产和销售保持相对稳定。","key":["过季产品","淡季购买","减价"],"must":true,"id":"市场营销::085","course":"市场营销"},{"project":"项目六 选择定价策略","term":"附带产品","definition":"又称互补产品，是指必须和主产品一起使用的产品，如手机电池、照相机胶卷、剃须刀片等。","key":["互补产品","与主产品一起使用"],"must":false,"id":"市场营销::086","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"销售渠道","definition":"又称分销渠道，是指产品从生产者向消费者或用户转移过程中所经过的一整套机构或途径。起点是生产者，终点是消费者。","key":["生产者向消费者转移","一整套机构或途径"],"must":true,"id":"市场营销::087","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"直接渠道","definition":"又称零级渠道，指生产企业不通过流通领域的中间环节，采用产销合一的经营方式，直接将产品销售给消费者的渠道。","key":["零级渠道","不经过中间环节","产销合一"],"must":true,"id":"市场营销::088","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"间接渠道","definition":"产品从生产领域进入消费领域前须经过若干中间商的销售渠道，是一种多层次机构的销售渠道。","key":["经过若干中间商","多层次机构"],"must":true,"id":"市场营销::089","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"宽渠道与窄渠道","definition":"宽渠道是生产商通过较多同类型中间商销售产品，销售面广泛；窄渠道是通过较少同类型中间商销售产品，销售面狭窄。","key":["较多同类型中间商","较少同类型中间商"],"must":true,"id":"市场营销::090","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"独家分销","definition":"制造商在某一地区严格选择一家最适合的中间商经营本企业产品或服务。","key":["某一地区","一家中间商"],"must":false,"id":"市场营销::091","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"选择分销","definition":"生产者在一定市场区域内选择一些愿意合作且条件较好的中间商来销售自己的产品。","key":["一定市场区域","选择一些中间商"],"must":false,"id":"市场营销::092","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"广泛分销","definition":"又称密集分销，指生产者利用尽可能多的中间商销售产品，使广大消费者能够及时、方便地买到所需产品。","key":["尽可能多的中间商","及时、方便"],"must":false,"id":"市场营销::093","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"中间商","definition":"介于生产者和消费者之间，专门从事组织或参与产品流通业务，促进交易行为完成的企业和个人。","key":["生产者和消费者之间","产品流通","促进交易"],"must":true,"id":"市场营销::094","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"经销商","definition":"从事产品销售业务，在产品买卖过程中拥有产品所有权的中间商。","key":["拥有产品所有权"],"must":true,"id":"市场营销::095","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"代理中间商","definition":"接受生产者委托从事销售业务，但不拥有产品所有权的中间商。","key":["接受委托","不拥有产品所有权"],"must":true,"id":"市场营销::096","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"批发","definition":"转售或加工服务大宗产品的交易行为。","key":["转售或加工服务","大宗产品"],"must":true,"id":"市场营销::097","course":"市场营销"},{"project":"项目七 建立销售渠道","term":"零售","definition":"直接为最终消费者服务的交易行为。","key":["直接","最终消费者"],"must":true,"id":"市场营销::098","course":"市场营销"},{"project":"项目八 开展产品促销","term":"促销","definition":"促进销售的简称，是指企业将有关产品的信息通过一定方式传递给目标对象，以促进其了解、信赖、购买产品，从而达到扩大销量的活动。","key":["信息传递","促进了解、信赖、购买","扩大销量"],"must":true,"id":"市场营销::099","course":"市场营销"},{"project":"项目八 开展产品促销","term":"促销组合","definition":"企业根据促销需要，对人员推销、广告、营业推广和公共关系四大手段进行科学选择和有机配合。","key":["人员推销","广告","营业推广","公共关系"],"must":true,"id":"市场营销::100","course":"市场营销"},{"project":"项目八 开展产品促销","term":"人员推销","definition":"一种旨在说服可能成为购买者的个人或组织购买企业产品的活动，着眼于信息的双向沟通和面对面的情感交流。","key":["说服购买","双向沟通","面对面"],"must":true,"id":"市场营销::101","course":"市场营销"},{"project":"项目八 开展产品促销","term":"广告","definition":"通过大众媒体与有选择的受众进行付费的、非人员的信息沟通活动，着眼于信息的大面积、快速传播。","key":["大众媒体","付费","非人员","快速传播"],"must":true,"id":"市场营销::102","course":"市场营销"},{"project":"项目八 开展产品促销","term":"营业推广","definition":"又称销售促进，是指为刺激消费者需求，鼓励其尽快或大量购买产品而采取的各种促销形式。","key":["销售促进","刺激需求","尽快或大量购买"],"must":true,"id":"市场营销::103","course":"市场营销"},{"project":"项目八 开展产品促销","term":"公共关系","definition":"企业运用传播与沟通手段，使自己与公众相互理解、相互适应，为促进企业目标实现而进行的一种有组织的管理活动。","key":["传播与沟通","相互理解","树立形象"],"must":true,"id":"市场营销::104","course":"市场营销"},{"project":"项目八 开展产品促销","term":"潜在消费者","definition":"人员推销中可能成为企业顾客的对象，一般应具备有需要、有购买力、有购买决策权、有接近可能性和有使用能力等条件。","key":["有需要","有购买力","有购买决策权"],"must":true,"id":"市场营销::105","course":"市场营销"},{"project":"项目八 开展产品促销","term":"CIS","definition":"企业区别于竞争对手及其他企业、团体、机关的各种形象、文字及风格等方面的综合体。导入CIS的目的是运用企业识别标志和识别系统，突出产品特色、企业风格和企业文化。","key":["企业识别系统","形象、文字及风格","区别于竞争对手"],"must":true,"id":"市场营销::106","course":"市场营销"},{"project":"项目九 创新市场营销","term":"网络营销","definition":"以互联网为媒体，以新的方式、方法和理念实施营销活动，有效促成个人和组织交易活动的新型营销模式。","key":["互联网为媒体","促成交易","新型营销模式"],"must":true,"id":"市场营销::107","course":"市场营销"},{"project":"项目九 创新市场营销","term":"交换链接","definition":"又称互惠链接，是具有一定互补优势的网站之间的简单合作形式，即分别在各自网站放置对方网站LOGO并设置超链接，达到互相推广的目的。","key":["互惠链接","互补优势","互相推广"],"must":false,"id":"市场营销::108","course":"市场营销"},{"project":"项目九 创新市场营销","term":"许可电子邮件营销","definition":"在用户事先许可的前提下，通过电子邮件向目标用户传递有价值信息的一种网络营销手段。三个基本要素是用户许可、电子邮件传递、信息对用户有价值。","key":["用户事先许可","电子邮件","有价值信息"],"must":true,"id":"市场营销::109","course":"市场营销"},{"project":"项目九 创新市场营销","term":"病毒式营销","definition":"并非真的传播病毒，而是将用户口碑通过网络宣传和扩散，利用快速复制的方式传播给大量受众。","key":["用户口碑","网络传播","快速复制"],"must":true,"id":"市场营销::110","course":"市场营销"},{"project":"项目九 创新市场营销","term":"文化营销","definition":"利用文化力进行营销，是企业营销人员及相关人员在核心价值观念影响下形成的营销理念及塑造出的营销形象，在具体市场运作中形成的一种营销模式。","key":["利用文化力","核心价值观念","营销模式"],"must":true,"id":"市场营销::111","course":"市场营销"},{"project":"项目九 创新市场营销","term":"品牌核心价值","definition":"品牌资产的主要部分，可使消费者明确、清晰地识别品牌的利益与个性，引发消费者共鸣。","key":["品牌资产","识别利益与个性","引发共鸣"],"must":true,"id":"市场营销::112","course":"市场营销"},{"project":"项目九 创新市场营销","term":"文化产品","definition":"根据文化环境的不同进行有差异的设计，使之符合消费者消费个性和消费价值，以物质消费为依托、以文化消费为目的的产品。","key":["文化环境","消费个性","文化消费为目的"],"must":true,"id":"市场营销::113","course":"市场营销"},{"project":"项目九 创新市场营销","term":"文化应变能力","definition":"企业适应消费者消费个性和消费价值变化的反应能力，是文化营销的基础，主要包括组织、设计、生产和营销应变能力。","key":["适应变化","反应能力","文化营销基础"],"must":false,"id":"市场营销::114","course":"市场营销"},{"project":"项目九 创新市场营销","term":"服务营销","definition":"企业为了充分满足消费者需求，在营销过程中所采取的一系列活动。它更注重消费者享受企业服务全过程的感受。","key":["满足消费者需求","一系列活动","全过程感受"],"must":true,"id":"市场营销::115","course":"市场营销"},{"project":"项目九 创新市场营销","term":"服务差异化","definition":"企业面对较强竞争对手时，在服务内容、服务渠道和服务形象等方面采取有别于竞争对手且突出自身特征的做法。","key":["服务内容、渠道、形象","有别于竞争对手"],"must":true,"id":"市场营销::116","course":"市场营销"},{"project":"项目九 创新市场营销","term":"服务有形化","definition":"企业借助服务过程中的各种有形要素，把看不见、摸不着的服务产品尽可能实体化、有形化，让消费者感知服务产品存在并提高享用利益。","key":["有形要素","实体化、有形化","感知服务产品"],"must":true,"id":"市场营销::117","course":"市场营销"},{"project":"项目九 创新市场营销","term":"服务品牌","definition":"企业用来区别于其他企业服务产品的名称、符号、象征或设计，由品牌名称和标识语、颜色、图案、制服、设备等可见性要素构成。","key":["区别于其他服务产品","名称、符号、象征或设计"],"must":true,"id":"市场营销::118","course":"市场营销"},{"project":"项目九 创新市场营销","term":"服务公关","definition":"企业为改善与社会公众的联系状况，增进公众对企业的认识、理解和支持，并树立良好企业形象而进行的一系列服务营销活动。","key":["改善公众联系","树立企业形象","服务营销活动"],"must":true,"id":"市场营销::119","course":"市场营销"},{"project":"项目九 创新市场营销","term":"绿色营销","definition":"企业以环境保护为经营指导思想，以绿色文化为价值观念，以消费者的绿色消费为中心和出发点形成的营销观念、方式和策略。要求兼顾自身利益、消费者利益和环境利益。","key":["环境保护","绿色消费","三方利益结合"],"must":true,"id":"市场营销::120","course":"市场营销"},{"project":"项目一 走进营销策划","term":"营销策划","definition":"为了解决营销过程中的问题、完成营销目标，借助科学方法与创新思维，立足企业现有营销状况，对企业未来营销发展做出战略性决策和指导的活动过程。","key":["解决营销问题","科学方法与创新思维","战略性决策和指导"],"must":true,"id":"营销策划实务::001","course":"营销策划实务"},{"project":"项目一 走进营销策划","term":"创意","definition":"策划中某一个具体实施方面的好点子。创意要经过市场调研和分析，并与企业发展紧密结合、丰富完善后，才能成为策划。创意是营销策划的灵魂。","key":["具体实施方面的好点子","市场调研","策划的灵魂"],"must":true,"id":"营销策划实务::002","course":"营销策划实务"},{"project":"项目一 走进营销策划","term":"营销策划的原则","definition":"主要包括全面考虑问题、效益先行、从市场出发、创意独特、创意可行、避免冲突与随机应变、团队意识与分工协作。","key":["效益先行","从市场出发","创意独特可行","团队协作"],"must":true,"id":"营销策划实务::003","course":"营销策划实务"},{"project":"项目一 走进营销策划","term":"营销策划的步骤","definition":"确定工作目标→进行市场调研→创意构思策略→撰写策划方案→方案执行控制→方案总结分析。","key":["确定目标","市场调研","创意构思","撰写方案","执行控制","总结分析"],"must":true,"id":"营销策划实务::004","course":"营销策划实务"},{"project":"项目三 产品策划方略","term":"目标市场定位","definition":"简称市场定位，是指企业对目标消费者或目标消费者市场的选择。","key":["目标消费者","目标消费者市场","选择"],"must":true,"id":"营销策划实务::005","course":"营销策划实务"},{"project":"项目三 产品策划方略","term":"产品定位","definition":"企业决定用什么样的产品来满足目标消费者或目标市场的需求。","key":["什么样的产品","满足目标市场需求"],"must":true,"id":"营销策划实务::006","course":"营销策划实务"},{"project":"项目五 渠道策划方略","term":"分销渠道","definition":"亦称销售渠道，是指产品从生产者向消费者或用户转移过程中所经过的一切商业组织和个人，即产品所有权转移所经过的各个环节连接起来形成的通道。","key":["生产者向消费者转移","商业组织和个人","所有权转移"],"must":true,"id":"营销策划实务::007","course":"营销策划实务"},{"project":"项目五 渠道策划方略","term":"渠道排他性","definition":"有些渠道中，如果某一类产品被某个企业或品牌抢先占领，其他企业或品牌就很难进入，甚至可能被排斥到渠道之外。","key":["抢先占领","其他企业难以进入"],"must":false,"id":"营销策划实务::008","course":"营销策划实务"},{"project":"项目五 渠道策划方略","term":"渠道独特性","definition":"每个企业的渠道网络都与其他企业不同，每个地区的渠道结构都与其他地区不同，每一种渠道模式也各有特征。","key":["渠道网络不同","渠道结构不同","模式各有特征"],"must":false,"id":"营销策划实务::009","course":"营销策划实务"},{"project":"项目六 市场推广策划","term":"软文","definition":"狭义上指企业付费在报纸、杂志或新媒体等宣传媒体上发表的纯文字性广告；广义上还包括可提升品牌形象和知名度、促进销售的宣传性、阐释性文章。","key":["付费发表","纯文字性广告","提升品牌形象","促进销售"],"must":true,"id":"营销策划实务::010","course":"营销策划实务"},{"project":"项目六 市场推广策划","term":"软文营销","definition":"通过特定的概念诉求，以理论联系实际的方式，利用心理冲击使消费者理解企业设定的概念，从而实现产品销售的网络营销模式。","key":["概念诉求","心理冲击","理解企业概念","实现产品销售"],"must":true,"id":"营销策划实务::011","course":"营销策划实务"},{"project":"项目六 市场推广策划","term":"营业推广（策划）","definition":"通过刺激和强化市场需求的各种促销方式来实现营销目标，在营销实践中常被称为狭义促销。","key":["刺激和强化市场需求","各种促销方式","狭义促销"],"must":true,"id":"营销策划实务::012","course":"营销策划实务"},{"project":"项目六 市场推广策划","term":"危机公关","definition":"由于企业管理不善、同行竞争、恶意破坏或外界突发事件，给企业或品牌带来危机时，企业为消除影响、恢复形象而采取的一系列自救行动。","key":["企业或品牌危机","消除影响","恢复形象","自救行动"],"must":true,"id":"营销策划实务::013","course":"营销策划实务"},{"project":"项目七 编写营销策划","term":"营销策划书","definition":"企业根据市场变化和自身实力，对企业的产品、资源及产品所服务的市场进行整体规划的计划性书面材料。它是营销方案的执行依据和行动纲领。","key":["整体规划","计划性书面材料","执行依据和行动纲领"],"must":true,"id":"营销策划实务::014","course":"营销策划实务"},{"project":"项目七 编写营销策划","term":"5W2H","definition":"营销策划书编写前需考虑的基础问题框架，包括What、Who、Where、Why、When、How、How much七个方面。","key":["What","Who","Where","Why","When","How","How much"],"must":true,"id":"营销策划实务::015","course":"营销策划实务"},{"project":"项目七 编写营销策划","term":"SWOT分析","definition":"分析企业面对市场的内部优势、内部劣势、外部机会和外部威胁，为营销策划提供依据的方法。","key":["优势","劣势","机会","威胁"],"must":true,"id":"营销策划实务::016","course":"营销策划实务"},{"project":"项目一 推销从业准备","term":"推销","definition":"推销人员运用各种方式、方法和手段，向推销对象传递产品或服务信息，说服其购买，以满足双方需要的活动。它是买卖双方信息沟通和达成交易的过程。","key":["传递产品或服务信息","说服购买","满足双方需要"],"must":true,"id":"推销实务::001","course":"推销实务"},{"project":"项目一 推销从业准备","term":"推销三要素","definition":"推销活动的基本构成要素，包括推销人员、推销对象和推销品。","key":["推销人员","推销对象","推销品"],"must":true,"id":"推销实务::002","course":"推销实务"},{"project":"项目一 推销从业准备","term":"产品的差别优势","definition":"本企业产品与竞争产品相比所具有的、能够更好满足顾客需要的独特优势，如功能、价格、服务等方面的差异。","key":["与竞争产品相比","更好满足顾客需要","独特优势"],"must":true,"id":"推销实务::003","course":"推销实务"},{"project":"项目一 推销从业准备","term":"现代推销观念","definition":"以顾客需求为中心的推销理念，强调通过沟通、服务和满足顾客需要来实现交易，并建立长期关系，而不是单纯把产品“推”给顾客。","key":["顾客需求为中心","沟通和服务","长期关系"],"must":true,"id":"推销实务::004","course":"推销实务"},{"project":"项目一 推销从业准备","term":"现代推销程序","definition":"现代推销活动通常按照寻找客户、接近客户、推销洽谈、处理异议、达成交易和售后追踪的基本过程展开。","key":["寻找客户","接近客户","推销洽谈","处理异议","达成交易","售后追踪"],"must":true,"id":"推销实务::005","course":"推销实务"},{"project":"项目一 推销从业准备","term":"爱达模式（AIDA）","definition":"一种典型推销模式，按 Attention（引起注意）、Interest（激发兴趣）、Desire（唤起欲望）、Action（促成行动）的顺序推进。","key":["注意","兴趣","欲望","行动"],"must":true,"id":"推销实务::006","course":"推销实务"},{"project":"项目一 推销从业准备","term":"费比模式（FABE）","definition":"一种通过特征、优点、利益和证据说服顾客的推销模式，即 Feature、Advantage、Benefit、Evidence。","key":["特征","优点","利益","证据"],"must":true,"id":"推销实务::007","course":"推销实务"},{"project":"项目二 寻找客户","term":"准客户","definition":"现代推销学认为，准客户一般应具备三个条件：有购买某种产品或服务的需要，有购买能力，有购买决定权。","key":["有需要","有购买能力","有购买决定权"],"must":true,"id":"推销实务::008","course":"推销实务"},{"project":"项目二 寻找客户","term":"目标客户","definition":"经过分析、筛选后，最有可能购买企业产品或服务，并值得推销人员重点开发与服务的顾客群体。","key":["分析筛选","最可能购买","重点开发"],"must":true,"id":"推销实务::009","course":"推销实务"},{"project":"项目二 寻找客户","term":"普遍寻找法","definition":"推销人员在不进行事先筛选的情况下，对某一地区或某一类人群普遍进行访问，从中寻找潜在客户的方法，又称逐户访问法。","key":["普遍访问","某一地区或人群","寻找潜在客户"],"must":true,"id":"推销实务::010","course":"推销实务"},{"project":"项目二 寻找客户","term":"连锁介绍法","definition":"推销人员通过现有客户的推荐和介绍，寻找新的潜在客户的方法，又称客户引荐法。良好客户关系是其关键。","key":["现有客户推荐介绍","寻找新客户","良好客户关系"],"must":true,"id":"推销实务::011","course":"推销实务"},{"project":"项目二 寻找客户","term":"中心开花法","definition":"推销人员先争取某一具有影响力的中心人物或中心单位成为客户，再借助其影响力带动周围潜在客户购买的方法。","key":["中心人物或单位","影响力","带动周围客户"],"must":true,"id":"推销实务::012","course":"推销实务"},{"project":"项目二 寻找客户","term":"广告开拓法","definition":"利用电视、网络、报纸等广告媒体发布信息，吸引潜在客户主动关注和咨询，从而寻找客户的方法。","key":["广告媒体","吸引潜在客户","主动咨询"],"must":true,"id":"推销实务::013","course":"推销实务"},{"project":"项目二 寻找客户","term":"个人观察法","definition":"推销人员凭借自身观察力和经验，在日常生活和工作中发现潜在客户的方法。","key":["观察力和经验","日常生活和工作","发现潜在客户"],"must":false,"id":"推销实务::014","course":"推销实务"},{"project":"项目二 寻找客户","term":"客户资格鉴定","definition":"对潜在客户是否具备购买资格进行分析和判断，以确定其能否成为目标客户的过程。","key":["购买资格","分析判断","目标客户"],"must":true,"id":"推销实务::015","course":"推销实务"},{"project":"项目二 寻找客户","term":"MAN法则","definition":"鉴定客户资格的常用法则：M（Money）购买能力，A（Authority）购买决策权，N（Need）购买需求，三者缺一不可。","key":["购买能力","购买决策权","购买需求"],"must":true,"id":"推销实务::016","course":"推销实务"},{"project":"项目三 接近客户","term":"接近准备","definition":"推销人员在正式接触客户前，对客户资讯、推销计划、推销工具和产品卖点等所做的准备工作。","key":["客户资讯","推销计划","推销工具","产品卖点"],"must":true,"id":"推销实务::017","course":"推销实务"},{"project":"项目三 接近客户","term":"推销访问计划","definition":"为实现访问目标而制定的行动安排，通常包括目标设定、客户筛选、时间规划和路线设计等步骤。","key":["目标设定","客户筛选","时间规划","路线设计"],"must":true,"id":"推销实务::018","course":"推销实务"},{"project":"项目三 接近客户","term":"卖点","definition":"把产品特征与目标客户需求有机结合后提炼出的、最能打动客户并说明购买价值的核心利益点。","key":["产品特征","客户需求","核心利益点"],"must":true,"id":"推销实务::019","course":"推销实务"},{"project":"项目三 接近客户","term":"约见客户","definition":"推销人员在正式接近客户之前，与客户沟通并确定接近对象、事由、时间和地点等内容的安排过程。","key":["接近对象","事由","时间","地点"],"must":true,"id":"推销实务::020","course":"推销实务"},{"project":"项目三 接近客户","term":"接近客户","definition":"推销人员正式接触客户，引起客户注意和兴趣，为后续洽谈创造条件的活动过程。","key":["正式接触","引起注意和兴趣","创造洽谈条件"],"must":true,"id":"推销实务::021","course":"推销实务"},{"project":"项目三 接近客户","term":"利益接近法","definition":"以产品能给客户带来的实际利益为切入点，引起客户注意和兴趣的接近方法。","key":["实际利益","切入点","引起注意"],"must":true,"id":"推销实务::022","course":"推销实务"},{"project":"项目三 接近客户","term":"赞美接近法","definition":"通过真诚、恰当的赞美拉近与客户的距离，营造良好沟通氛围，从而接近客户的方法。","key":["真诚恰当","拉近距离","良好氛围"],"must":true,"id":"推销实务::023","course":"推销实务"},{"project":"项目四 推销洽谈","term":"推销洽谈","definition":"推销人员运用各种方式、方法和手段向顾客传递推销信息，同时了解顾客需求与想法，旨在通过双向沟通满足双方需求并促成交易的过程。","key":["传递推销信息","双向沟通","满足双方需求"],"must":true,"id":"推销实务::024","course":"推销实务"},{"project":"项目四 推销洽谈","term":"提示法","definition":"推销人员在洽谈中运用语言提示，向客户传递购买建议和产品信息，促使客户产生购买意愿的一类方法。","key":["语言提示","购买建议","促进购买意愿"],"must":true,"id":"推销实务::025","course":"推销实务"},{"project":"项目四 推销洽谈","term":"直接提示法","definition":"推销人员直接向客户提出购买建议，促使客户购买的洽谈方法，适用于客户需求明确、产品优势明显的情况。","key":["直接提出购买建议","需求明确","优势明显"],"must":true,"id":"推销实务::026","course":"推销实务"},{"project":"项目四 推销洽谈","term":"间接提示法","definition":"通过委婉、间接的方式向客户传递推销信息，启发客户购买欲望的洽谈方法。","key":["委婉、间接","传递信息","启发购买欲望"],"must":true,"id":"推销实务::027","course":"推销实务"},{"project":"项目四 推销洽谈","term":"逻辑提示法","definition":"通过逻辑推理，让客户认识到购买产品的必要性，以理性说服客户的方法。","key":["逻辑推理","购买必要性","理性说服"],"must":true,"id":"推销实务::028","course":"推销实务"},{"project":"项目四 推销洽谈","term":"演示法","definition":"推销人员通过产品实物、文字、图片、视频等方式，直观展示产品特点和优势，使客户相信并接受产品的洽谈方法。","key":["直观展示","产品特点和优势","使客户相信"],"must":true,"id":"推销实务::029","course":"推销实务"},{"project":"项目四 推销洽谈","term":"协商型提问","definition":"以商量的口吻与客户交流，尊重客户意见，让客户感到被重视，并通过共同讨论形成方案的提问方式。","key":["商量口吻","尊重意见","共同讨论"],"must":true,"id":"推销实务::030","course":"推销实务"},{"project":"项目四 推销洽谈","term":"启发型提问","definition":"通过富有启发性的问题，引导客户自己思考并发现产品或服务价值，主动参与洽谈的提问方式。","key":["富有启发性","客户自己思考","发现产品价值"],"must":true,"id":"推销实务::031","course":"推销实务"},{"project":"项目四 推销洽谈","term":"限制型提问","definition":"提出带有一定限制条件的问题，引导客户在限定范围内做出选择，从而控制洽谈方向的提问方式。","key":["限制条件","限定范围选择","控制洽谈方向"],"must":true,"id":"推销实务::032","course":"推销实务"},{"project":"项目四 推销洽谈","term":"答复技巧","definition":"推销人员回答客户问题时，应做到礼貌、准确、简洁、委婉，避免生硬回答、误导客户或语言冗长。","key":["礼貌","准确","简洁","委婉"],"must":true,"id":"推销实务::033","course":"推销实务"},{"project":"项目四 推销洽谈","term":"倾听技巧","definition":"推销人员在洽谈中专注、积极地听取客户意见，站在客户角度理解其需求和感受，并通过眼神、点头等方式给予回应。","key":["专注倾听","理解需求和感受","积极回应"],"must":true,"id":"推销实务::034","course":"推销实务"},{"project":"项目四 推销洽谈","term":"叙述技巧","definition":"推销人员有条理、有逻辑地组织语言介绍产品或服务，并结合客户需求突出重点、融入情感、增强感染力。","key":["有条理、有逻辑","突出重点","融入情感"],"must":true,"id":"推销实务::035","course":"推销实务"},{"project":"项目五 处理客户异议","term":"客户异议","definition":"客户在推销过程中对产品、价格、服务、企业或推销人员等提出的疑问、不同意见或反对意见。","key":["疑问、不同意见","反对意见"],"must":true,"id":"推销实务::036","course":"推销实务"},{"project":"项目五 处理客户异议","term":"真实异议与虚假异议","definition":"真实异议是客户真正担心并影响购买决策的意见；虚假异议则可能是客户为拒绝购买、争取条件或掩盖真实原因而提出的借口。","key":["真正担心","影响购买决策","借口或策略"],"must":true,"id":"推销实务::037","course":"推销实务"},{"project":"项目五 处理客户异议","term":"需求异议","definition":"客户认为自己不需要该产品或服务，或认为现有产品已能满足需要而产生的异议。","key":["认为自己不需要","现有产品已满足"],"must":true,"id":"推销实务::038","course":"推销实务"},{"project":"项目五 处理客户异议","term":"产品异议","definition":"客户对产品的质量、性能、款式、包装、品牌等是否符合自己的需要产生的异议。","key":["质量、性能、款式","是否符合需要"],"must":true,"id":"推销实务::039","course":"推销实务"},{"project":"项目五 处理客户异议","term":"价格异议","definition":"客户认为产品价格过高、性价比不足或与自己的预算不符而产生的异议。","key":["价格过高","性价比不足","预算不符"],"must":true,"id":"推销实务::040","course":"推销实务"},{"project":"项目五 处理客户异议","term":"购买时间异议","definition":"客户认为当前不是购买的最佳时机，希望推迟购买而产生的异议。","key":["当前时机不合适","推迟购买"],"must":true,"id":"推销实务::041","course":"推销实务"},{"project":"项目五 处理客户异议","term":"利用处理法","definition":"推销人员抓住客户异议中隐藏的积极因素，将异议转化为购买理由，重新诠释产品价值的方法。","key":["异议中的积极因素","转化为购买理由","重新诠释价值"],"must":true,"id":"推销实务::042","course":"推销实务"},{"project":"项目五 处理客户异议","term":"补偿处理法","definition":"当客户异议具有一定合理性时，推销人员承认产品存在的不足，同时通过提供相关且有吸引力的补偿来提升客户接受度的方法。","key":["承认不足","提供补偿","提升接受度"],"must":true,"id":"推销实务::043","course":"推销实务"},{"project":"项目五 处理客户异议","term":"间接否定法","definition":"先对客户异议表示一定理解，再通过自然转折、充分理由说明不同看法，从而否定客户异议的方法，又称“是的……但是……”法。","key":["先理解","自然转折","说明不同看法"],"must":true,"id":"推销实务::044","course":"推销实务"},{"project":"项目五 处理客户异议","term":"直接否定法","definition":"当客户异议明显错误时，推销人员直接、明确地否定客户观点的方法，但必须注意语气和措辞，避免伤害客户。","key":["异议明显错误","直接否定","注意语气措辞"],"must":true,"id":"推销实务::045","course":"推销实务"},{"project":"项目五 处理客户异议","term":"询问处理法","definition":"面对客户异议时，推销人员通过提问进一步了解异议的具体内容和原因，再寻找更合适解决方案的方法。","key":["通过提问","了解异议原因","寻找解决方案"],"must":true,"id":"推销实务::046","course":"推销实务"},{"project":"项目六 达成交易","term":"达成交易","definition":"推销人员抓住成交时机，促使客户作出购买决定并完成交易的活动，是整个推销过程的重要目标。","key":["抓住成交时机","作出购买决定","完成交易"],"must":true,"id":"推销实务::047","course":"推销实务"},{"project":"项目六 达成交易","term":"成交信号","definition":"客户在购买意向增强时，通过语言、行为和表情表现出来的提示性信息，如询问价格、点头、翻阅合同、放松微笑等。","key":["语言信号","行为信号","表情信号"],"must":true,"id":"推销实务::048","course":"推销实务"},{"project":"项目六 达成交易","term":"请求成交法","definition":"推销人员看准时机，直接请求客户购买产品的成交方法。","key":["看准时机","直接请求购买"],"must":true,"id":"推销实务::049","course":"推销实务"},{"project":"项目六 达成交易","term":"假定成交法","definition":"推销人员假定客户已经同意购买，直接以成交后的有关问题进行沟通，从而促使客户作出购买决定的方法。","key":["假定已经同意购买","直接进入成交后事项"],"must":true,"id":"推销实务::050","course":"推销实务"},{"project":"项目六 达成交易","term":"选择成交法","definition":"推销人员向客户提供两种或多种可选择的购买方案，引导客户在既定范围内作出选择并成交的方法。","key":["两种或多种方案","既定范围","作出选择"],"must":true,"id":"推销实务::051","course":"推销实务"},{"project":"项目六 达成交易","term":"小点成交法","definition":"推销人员先就较小、较容易决定的问题与客户取得一致，再逐步促成整体交易的方法，又称次要问题成交法。","key":["较小问题","容易决定","逐步促成交易"],"must":true,"id":"推销实务::052","course":"推销实务"},{"project":"项目六 达成交易","term":"从众成交法","definition":"利用客户的从众心理，以多数人的购买行为或产品受欢迎程度促使客户作出购买决定的方法。","key":["从众心理","多数人购买","促成决定"],"must":true,"id":"推销实务::053","course":"推销实务"},{"project":"项目六 达成交易","term":"优惠成交法","definition":"通过给予价格优惠、赠品或其他附加利益，促成客户立即购买的方法。","key":["价格优惠","赠品或附加利益","立即购买"],"must":true,"id":"推销实务::054","course":"推销实务"},{"project":"项目六 达成交易","term":"保证成交法","definition":"针对客户对产品质量、效果或售后服务的担忧，通过作出必要保证来解除顾虑、促成交易的方法。","key":["质量或售后担忧","作出保证","解除顾虑"],"must":true,"id":"推销实务::055","course":"推销实务"},{"project":"项目六 达成交易","term":"试用成交法","definition":"把产品交给客户试用，让客户通过实际使用感受产品价值，从而促成购买的方法。","key":["客户试用","实际使用感受","促成购买"],"must":true,"id":"推销实务::056","course":"推销实务"},{"project":"项目六 达成交易","term":"最后机会成交法","definition":"通过提示优惠期限、数量有限或机会即将结束等信息，促使客户尽快作出购买决定的方法。","key":["优惠期限","数量有限","尽快购买"],"must":true,"id":"推销实务::057","course":"推销实务"},{"project":"项目六 达成交易","term":"销售合同","definition":"买卖双方为明确交易标的、数量、价款、履行期限、履行方式、违约责任等权利义务而订立的协议。","key":["交易标的、数量、价款","履行期限和方式","违约责任"],"must":true,"id":"推销实务::058","course":"推销实务"},{"project":"项目七 回收货款与客户管理","term":"回收货款","definition":"推销人员按照约定条件和流程，及时向客户收回销售款项，保证企业资金回笼和经营安全的活动。","key":["按约定条件","收回销售款项","资金回笼"],"must":true,"id":"推销实务::059","course":"推销实务"},{"project":"项目七 回收货款与客户管理","term":"客户关系管理（CRM）","definition":"企业通过建立客户档案、分析客户信息、分类管理客户和持续维护关系，以提高客户价值与忠诚度的一系列管理活动。","key":["建立客户档案","分析客户信息","提高客户价值和忠诚度"],"must":true,"id":"推销实务::060","course":"推销实务"},{"project":"项目七 回收货款与客户管理","term":"ABC分类法","definition":"根据客户价值或重要程度把客户划分为A、B、C等不同等级，实施差异化管理和资源配置的方法。","key":["客户价值","A、B、C等级","差异化管理"],"must":true,"id":"推销实务::061","course":"推销实务"},{"project":"项目七 回收货款与客户管理","term":"客户投诉处理六步法","definition":"接受投诉→平息怨气→澄清问题→解决问题→感谢客户→跟踪回访。","key":["接受投诉","平息怨气","澄清问题","解决问题","感谢客户","跟踪回访"],"must":true,"id":"推销实务::062","course":"推销实务"},{"project":"项目七 回收货款与客户管理","term":"客户保持","definition":"企业通过持续提供价值、保持沟通和加强关怀，使现有客户继续购买并形成满意与忠诚的管理过程。","key":["持续提供价值","保持沟通","继续购买","满意与忠诚"],"must":true,"id":"推销实务::063","course":"推销实务"},{"project":"项目八 网络推销","term":"网络推销","definition":"利用互联网技术开展产品信息传递、客户开发和销售促进，以实现企业营销目标的推销方式。","key":["互联网技术","信息传递和客户开发","实现营销目标"],"must":true,"id":"推销实务::064","course":"推销实务"},{"project":"项目八 网络推销","term":"线上商务推销","definition":"以搜索引擎推销、网络店铺推销等线上平台为主要渠道开展的商务推销活动。","key":["搜索引擎推销","网络店铺推销","线上渠道"],"must":true,"id":"推销实务::065","course":"推销实务"},{"project":"项目八 网络推销","term":"搜索引擎收录","definition":"把网站信息提交给搜索引擎，使网页有机会被搜索引擎发现并纳入检索范围，增加产品被潜在客户发现的机会。","key":["提交网站信息","被搜索引擎发现","增加曝光机会"],"must":true,"id":"推销实务::066","course":"推销实务"},{"project":"项目八 网络推销","term":"搜索引擎优化","definition":"通过优化网站内容、结构和关键词等方式，提高网站在搜索结果中的排名，增加访问量并促进销售宣传。","key":["优化网站内容和结构","提升搜索排名","增加访问量"],"must":true,"id":"推销实务::067","course":"推销实务"},{"project":"项目八 网络推销","term":"关键词竞价","definition":"通过竞价方式购买关键词，从而提高企业网站在关键词搜索结果中的排名和产品曝光率。","key":["竞价购买关键词","提高搜索排名","提高曝光率"],"must":true,"id":"推销实务::068","course":"推销实务"},{"project":"项目八 网络推销","term":"微信推销","definition":"利用微信公众号、服务号、小程序和企业微信等微信生态工具开展客户沟通、内容传播和产品销售的推销方式。","key":["微信公众号和小程序","内容传播","产品销售"],"must":true,"id":"推销实务::069","course":"推销实务"},{"project":"项目八 网络推销","term":"社群推销","definition":"通过建立和运营具有共同兴趣或需求的社群，持续互动、建立信任并促成产品或服务销售的推销方式。","key":["建立和运营社群","持续互动","建立信任","促成销售"],"must":true,"id":"推销实务::070","course":"推销实务"},{"project":"项目八 网络推销","term":"短视频推销","definition":"利用短视频内容吸引目标受众、传递产品价值并引导咨询或购买的推销方式。","key":["短视频内容","吸引目标受众","引导咨询或购买"],"must":true,"id":"推销实务::071","course":"推销实务"},{"project":"项目八 网络推销","term":"网络直播推销","definition":"通过实时网络直播展示产品、与观众互动并及时解答问题，以促进购买的推销方式。","key":["实时直播","展示产品","互动答疑","促进购买"],"must":true,"id":"推销实务::072","course":"推销实务"}]};
+const STORAGE_KEY = 'market_sales_noun_study_v1';
+const state = {view:'home',chapters:[],course:'全部',project:'全部项目',search:'',mustOnly:false,reviewOnly:false,tab:'hub',cardIndex:0,revealed:false,listHidden:false,randomId:null,quiz:null,progress:loadProgress()};
+const tabs=[{id:'card',label:'① 名词速记'},{id:'list',label:'② 背诵清单'},{id:'random',label:'③ 随机抽背'},{id:'quiz',label:'④ 闯关测验'},{id:'progress',label:'⑤ 学习进度'}];
+const $=(s,root=document)=>root.querySelector(s);
+const $$=(s,root=document)=>[...root.querySelectorAll(s)];
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function loadProgress(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch(e){return {}}}function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state.progress))}catch(e){}}
+function courseTerms(course){return DATA.terms.filter(t=>t.course===course);}
+function projectsForScope(){const pool=state.course==='全部'?DATA.terms:courseTerms(state.course);return [...new Set(pool.map(t=>t.project))];}
+function filteredTerms(){const q=state.search.trim().toLowerCase();return DATA.terms.filter(t=>{if(state.course!=='全部'&&t.course!==state.course)return false;if(state.project!=='全部项目'&&t.project!==state.project)return false;if(state.mustOnly&&!t.must)return false;if(state.reviewOnly&&getProgress(t.id)!=='review')return false;if(q){const hay=(t.term+' '+t.definition+' '+(t.key||[]).join(' ')+' '+t.course+' '+t.project).toLowerCase();if(!hay.includes(q))return false;}return true;});}
+function getProgress(id){return state.progress[id]||'new';}
+function setProgress(id,value){if(value==='new')delete state.progress[id];else state.progress[id]=value;saveProgress();}
+function masteredCount(){return DATA.terms.filter(t=>getProgress(t.id)==='done').length;}
+function renderHero(){$('#heroTotal').textContent=DATA.terms.length;$('#heroMust').textContent=DATA.terms.filter(t=>t.must).length;$('#heroDone').textContent=masteredCount();}
+function renderFilters(){const coursePills=$('#coursePills');const counts={'全部':DATA.terms.length};DATA.courses.forEach(c=>counts[c.course]=courseTerms(c.course).length);coursePills.innerHTML=['全部',...DATA.courses.map(c=>c.course)].map(c=>`<button class="pill ${state.course===c?'active':''}" data-course="${escapeHTML(c)}">${c==='全部'?'全部':escapeHTML(c)}<span class="count">${counts[c]}</span></button>`).join('');$$('.pill',coursePills).forEach(b=>b.onclick=()=>{state.course=b.dataset.course;state.project='全部项目';state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();});const select=$('#projectSelect');const projects=projectsForScope();if(!projects.includes(state.project))state.project='全部项目';select.innerHTML=['全部项目',...projects].map(p=>`<option ${state.project===p?'selected':''}>${escapeHTML(p)}</option>`).join('');select.onchange=()=>{state.project=select.value;state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();};}
+function renderTabs(){$('#tabs').innerHTML=tabs.map(t=>`<button class="tab-btn ${state.tab===t.id?'active':''}" data-tab="${t.id}">${t.label}</button>`).join('');$$('.tab-btn').forEach(b=>b.onclick=()=>{openFeature(b.dataset.tab,null,false);});}
+function highlight(t){let html=escapeHTML(t.definition);[...(t.key||[])].sort((a,b)=>b.length-a.length).forEach(k=>{if(!k)return;const safe=escapeHTML(k);html=html.split(safe).join(`<mark>${safe}</mark>`);});return html;}
+function badges(t){return `<div class="badges"><span class="badge course">${escapeHTML(t.course)}</span><span class="badge">${escapeHTML(t.project)}</span>${t.must?'<span class="badge must">重点必背</span>':''}</div>`;}
+function renderCard(){const list=filteredTerms();if(!list.length){$('#content').innerHTML='<section class="panel empty">没有符合当前筛选条件的名词，请调整筛选或搜索条件。</section>';return;}state.cardIndex=Math.min(state.cardIndex,list.length-1);const t=list[state.cardIndex],p=getProgress(t.id);$('#content').innerHTML=`
+    <div class="study-layout">
+      <section class="panel card-stage">
+        <div class="card-top"><span>ENTRY ${String(state.cardIndex+1).padStart(3,'0')} / ${String(list.length).padStart(3,'0')}</span>${badges(t)}</div>
+        <div class="term-card"><div class="term-label">OBSERVATION LOG · 先回忆，再核对</div><h2 class="term-name">${escapeHTML(t.term)}</h2><div class="hint">${state.revealed?'请对照释义，找出自己遗漏的关键词':'答案已隐藏。点击“显示释义”或按空格键核对。'}</div>${state.revealed?`<div class="answer"><div class="answer-label">标准释义</div><p>${highlight(t)}</p><div class="keywords">${(t.key||[]).map(k=>`<span class="keyword"># ${escapeHTML(k)}</span>`).join('')}</div></div>`:''}</div>
+        <div class="card-actions"><button class="btn secondary" id="prevBtn" ${state.cardIndex===0?'disabled':''}>← 上一个</button><button class="btn" id="revealBtn">${state.revealed?'隐藏释义':'显示释义'}</button><button class="btn secondary" id="nextBtn" ${state.cardIndex===list.length-1?'disabled':''}>下一个 →</button></div>
+        <div class="card-actions"><button class="btn good" id="doneBtn">✓ 记熟了</button><button class="btn warn" id="reviewBtn">↻ 还需复习</button><button class="btn secondary" id="clearBtn" ${p==='new'?'disabled':''}>清除本条进度</button></div>
+      </section>
+      <aside class="panel side"><h3>轨道同步 / PROGRESS</h3><div class="progress-bar"><i style="width:${list.length?Math.round(list.filter(x=>getProgress(x.id)==='done').length/list.length*100):0}%"></i></div><div class="mini-stats"><div class="mini-stat"><b>${list.filter(x=>getProgress(x.id)==='done').length}</b><span>已记熟</span></div><div class="mini-stat"><b>${list.filter(x=>getProgress(x.id)==='review').length}</b><span>需复习</span></div></div><div class="legend"><span><i class="dot done"></i>记熟</span><span><i class="dot review"></i>复习</span><span><i class="dot new"></i>未学习</span></div><h3>快速跳转</h3><div class="quick-list">${list.map((x,i)=>`<button class="quick-item" data-jump="${i}"><span>${escapeHTML(x.term)}</span><small>${getProgress(x.id)==='done'?'已记熟':getProgress(x.id)==='review'?'需复习':'未学习'}</small></button>`).join('')}</div></aside>
+    </div>`;
+  $('#prevBtn').onclick=()=>{state.cardIndex--;state.revealed=false;renderContent();};$('#nextBtn').onclick=()=>{state.cardIndex++;state.revealed=false;renderContent();};$('#revealBtn').onclick=()=>{state.revealed=!state.revealed;renderContent();};$('#doneBtn').onclick=()=>gradeAndAdvance('done');$('#reviewBtn').onclick=()=>gradeAndAdvance('review');$('#clearBtn').onclick=()=>{setProgress(t.id,'new');renderAll();};$$('.quick-item').forEach(b=>b.onclick=()=>{state.cardIndex=Number(b.dataset.jump);state.revealed=false;renderContent();});}
+function gradeAndAdvance(value){const list=filteredTerms();if(!list.length)return;const t=list[state.cardIndex];setProgress(t.id,value);toast(value==='done'?'已标记为“记熟”':'已加入复习清单');if(state.cardIndex<list.length-1){state.cardIndex++;state.revealed=false;}renderAll();}
+function renderList(){const list=filteredTerms();if(!list.length){$('#content').innerHTML='<section class="panel empty">没有符合条件的名词。</section>';return;}$('#content').innerHTML=`<section class="panel list-panel print-area"><div class="list-head"><div><h2>名词解释背诵清单</h2><p>共 ${list.length} 条。可隐藏释义进行自测，也可直接打印。</p></div><div class="card-actions" style="margin:0"><button class="btn secondary" id="hideListBtn">${state.listHidden?'显示全部释义':'隐藏全部释义'}</button><button class="btn" id="printBtn">打印清单</button></div></div><div class="term-list">${list.map(t=>`<article class="term-row"><div class="term-side"><b>${escapeHTML(t.term)}</b><div class="meta">${escapeHTML(t.course)} · ${escapeHTML(t.project)}${t.must?' · 重点':''}</div></div><div class="definition ${state.listHidden?'hidden-definition':''}">${highlight(t)}</div></article>`).join('')}</div></section>`;$('#hideListBtn').onclick=()=>{state.listHidden=!state.listHidden;renderContent();};$('#printBtn').onclick=()=>window.print();}
+function renderRandom(){const list=filteredTerms();if(!list.length){$('#content').innerHTML='<section class="panel empty">没有符合条件的名词。</section>';return;}if(!state.randomId||!list.some(t=>t.id===state.randomId))state.randomId=list[Math.floor(Math.random()*list.length)].id;const t=list.find(x=>x.id===state.randomId);$('#content').innerHTML=`<section class="panel card-stage"><div class="card-top"><span>随机抽背 · 不按顺序</span>${badges(t)}</div><div class="term-card"><div class="term-label">请完整说出它的名词解释</div><h2 class="term-name">${escapeHTML(t.term)}</h2><div class="hint">先在纸上或心里复述，再点击显示答案。</div>${state.revealed?`<div class="answer"><div class="answer-label">标准释义</div><p>${highlight(t)}</p><div class="keywords">${(t.key||[]).map(k=>`<span class="keyword"># ${escapeHTML(k)}</span>`).join('')}</div></div>`:''}</div><div class="card-actions"><button class="btn" id="randomReveal">${state.revealed?'隐藏答案':'显示答案'}</button><button class="btn secondary" id="another">换一个名词</button><button class="btn good" id="randomDone">✓ 会背了</button><button class="btn warn" id="randomReview">↻ 还要背</button></div></section>`;$('#randomReveal').onclick=()=>{state.revealed=!state.revealed;renderContent();};$('#another').onclick=()=>{const others=list.filter(x=>x.id!==t.id);state.randomId=(others.length?others[Math.floor(Math.random()*others.length)]:t).id;state.revealed=false;renderContent();};$('#randomDone').onclick=()=>{setProgress(t.id,'done');toast('已标记为“记熟”');state.revealed=false;renderRandom();renderHero();};$('#randomReview').onclick=()=>{setProgress(t.id,'review');toast('已加入复习清单');state.revealed=false;renderRandom();renderHero();};}
+
+function shuffled(arr){return [...arr].sort(()=>Math.random()-.5);}
+function startQuiz(){const count=Number($('#quizCount').value);let pool=shuffled(filteredTerms());if(count>0)pool=pool.slice(0,count);if(!pool.length){toast('当前条件下没有题目');return;}state.quiz={items:pool,index:0,score:0,answered:false,choice:null,wrong:[],order:[]};renderContent();}
+function quizOptions(t){const sameProject=DATA.terms.filter(x=>x.id!==t.id&&x.course===t.course&&x.project===t.project);const sameCourse=DATA.terms.filter(x=>x.id!==t.id&&x.course===t.course);const pool=sameProject.length>=3?sameProject:sameCourse;const distractors=shuffled(pool).slice(0,3);return shuffled([t,...distractors]).map(x=>({id:x.id,text:x.term}));}
+function renderQuiz(){if(!state.quiz){$('#content').innerHTML=`<section class="panel quiz-panel"><div class="quiz-intro"><h2>验证终端 / VALIDATION</h2><p>根据当前筛选范围，从标准释义中选择正确名词。每次答题立即反馈，结束后会列出错题，方便回看。</p><div class="quiz-controls"><label class="control">题目数量<select id="quizCount"><option value="10">10题</option><option value="20" selected>20题</option><option value="30">30题</option><option value="0">全部</option></select></label><button class="btn" id="startQuiz">开始答题</button></div><p style="font-size:13px;margin-top:12px">当前筛选范围：<b>${filteredTerms().length}</b> 个名词</p></div></section>`;$('#startQuiz').onclick=startQuiz;return;}const q=state.quiz;if(q.index>=q.items.length){renderQuizResult();return;}const t=q.items[q.index];if(!q.order||q.orderIndex!==q.index){q.order=quizOptions(t);q.orderIndex=q.index;q.answered=false;q.choice=null;}$('#content').innerHTML=`<section class="panel quiz-panel"><div class="quiz-top"><span>第 ${q.index+1} / ${q.items.length} 题</span><span>当前得分：${q.score} 分</span></div><div class="quiz-question"><small>请选择对应的名词</small><p>${escapeHTML(t.definition)}</p></div><div class="option-list">${q.order.map((o,i)=>`<button class="option ${q.answered?(o.id===t.id?'correct':(o.id===q.choice?'wrong':'')):''}" data-choice="${o.id}" ${q.answered?'disabled':''}><span class="letter">${String.fromCharCode(65+i)}</span><span>${escapeHTML(o.text)}</span></button>`).join('')}</div>${q.answered?`<div class="quiz-feedback ${q.choice===t.id?'good':'bad'}">${q.choice===t.id?'回答正确。':'回答错误。正确答案是：<b>'+escapeHTML(t.term)+'</b>'}</div><div class="card-actions" style="justify-content:flex-end"><button class="btn" id="nextQuestion">${q.index+1>=q.items.length?'查看结果':'下一题'}</button></div>`:''}</section>`;$$('.option').forEach(b=>b.onclick=()=>{if(q.answered)return;q.answered=true;q.choice=b.dataset.choice;if(q.choice===t.id)q.score+=5;else q.wrong.push(t);renderContent();});if($('#nextQuestion'))$('#nextQuestion').onclick=()=>{q.index++;q.orderIndex=-1;renderContent();};}
+function renderQuizResult(){const q=state.quiz,total=q.items.length,correct=q.score/5,rate=Math.round(correct/total*100);$('#content').innerHTML=`<section class="panel result"><div class="score">${rate}%</div><h2>${rate>=90?'优秀，已经非常熟练':rate>=75?'不错，再复习错题即可':'建议回到名词卡片继续巩固'}</h2><p>共 ${total} 题，答对 ${correct} 题，错 ${q.wrong.length} 题。</p><div class="card-actions"><button class="btn" id="againQuiz">再来一轮</button><button class="btn secondary" id="backCards">回到名词速记</button></div>${q.wrong.length?`<div class="wrong-list">${q.wrong.map(t=>`<div class="wrong-item"><b>${escapeHTML(t.term)}</b><div>${highlight(t)}</div></div>`).join('')}</div>`:''}</section>`;$('#againQuiz').onclick=()=>{state.quiz=null;renderContent();};$('#backCards').onclick=()=>{state.quiz=null;state.tab='card';renderTabs();renderContent();};}
+function renderProgress(){const total=DATA.terms.length,done=DATA.terms.filter(t=>getProgress(t.id)==='done').length,review=DATA.terms.filter(t=>getProgress(t.id)==='review').length,unseen=total-done-review;const groups={};DATA.terms.forEach(t=>{groups[t.project]??={done:0,review:0,total:0};groups[t.project].total++;const p=getProgress(t.id);if(p==='done')groups[t.project].done++;if(p==='review')groups[t.project].review++;});$('#content').innerHTML=`<section class="panel progress-panel"><h2 style="margin:0">轨道同步记录 / LEARNING LOG</h2><p style="color:var(--muted);margin:5px 0 0">进度自动保存在当前设备，刷新页面不会丢失。</p><div class="overview-grid"><div class="overview-card"><b>${total}</b><span>全部名词</span></div><div class="overview-card"><b style="color:var(--green)">${done}</b><span>已经记熟</span></div><div class="overview-card"><b style="color:var(--amber)">${review}</b><span>需要复习</span></div><div class="overview-card"><b style="color:var(--muted)">${unseen}</b><span>尚未学习</span></div></div><div class="progress-projects">${Object.entries(groups).map(([name,g])=>{const pct=g.done?Math.round(g.done/g.total*100):0;return `<div class="project-progress"><b>${escapeHTML(name)}</b><div class="bar"><i style="width:${pct}%"></i></div><small>${g.done}/${g.total}</small></div>`;}).join('')}</div><div class="card-actions" style="justify-content:flex-start;margin-top:18px"><button class="btn secondary" id="reviewOnly">只复习“还需复习”</button><button class="btn danger" id="resetProgress">清空全部进度</button></div></section>`;$('#reviewOnly').onclick=()=>{state.course='全部';state.project='全部项目';state.search='';state.mustOnly=false;state.reviewOnly=true;state.tab='card';state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();toast('已只显示需要复习的名词');};$('#resetProgress').onclick=()=>{if(confirm('确定清空全部学习进度吗？此操作不可撤销。')){state.progress={};saveProgress();renderAll();toast('学习进度已清空');}};}
+function renderContent(){$('#content').className='content';if(state.tab==='card')renderCard();else if(state.tab==='list')renderList();else if(state.tab==='random')renderRandom();else if(state.tab==='quiz')renderQuiz();else renderProgress();}
+function syncViewVisibility(){
+  const hub=state.tab==='hub';
+  const hubView=$('#hubView'),back=$('#backHub'),toolbar=$('.toolbar'),tabs=$('#tabs'),content=$('#content');
+  if(hubView)hubView.style.display=hub?'block':'none';
+  if(back)back.style.display=hub?'none':'inline-flex';
+  if(toolbar)toolbar.style.display=hub?'none':'block';
+  if(tabs)tabs.style.display=hub?'none':'flex';
+  if(content)content.style.display=hub?'none':'block';
+  document.body.classList.toggle('view-hub',hub);document.body.classList.toggle('view-study',!hub);
+}
+const featureMeta={card:['01','名词速记'],list:['02','背诵清单'],random:['03','随机抽背'],quiz:['04','闯关测验'],progress:['05','学习进度']};
+function showHub(){state._transitioning=false;const ov=$('#transitionOverlay');if(ov)ov.classList.remove('active','reveal');state.tab='hub';state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'smooth'});}
+function openFeature(tab,source,animate=false){
+  if(state._transitioning)return;
+  if(!animate||!source){state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'smooth'});return;}
+  state._transitioning=true;
+  const overlay=$('#transitionOverlay'),idx=$('#transitionIndex'),title=$('#transitionTitle'),r=source.getBoundingClientRect(),meta=featureMeta[tab]||['00','功能'];
+  overlay.style.setProperty('--tx',(r.left+r.width/2)+'px');overlay.style.setProperty('--ty',(r.top+r.height/2)+'px');
+  idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
+  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},380);
+  setTimeout(()=>overlay.classList.add('reveal'),440);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},860);
+}
+function animateOrbits(ts){
+  const layer=$('#orbitLayer');if(!layer||layer.offsetParent===null){requestAnimationFrame(animateOrbits);return;}
+  const r=layer.getBoundingClientRect();if(r.width<10)return requestAnimationFrame(animateOrbits);
+  const w=r.width,h=r.height,cx=w/2,cy=h/2,R=Math.min(w,h)*(w<760?.25:.28),maxRx=Math.min(w*.46,R*2),minRx=Math.max(R*1.32,maxRx*.58);
+  $$('.orbit-ring',layer).forEach((el,i)=>{const k=i/4,rx=minRx+(maxRx-minRx)*k,ry=rx*.52;el.style.width=rx*2+'px';el.style.height=ry*2+'px';el.style.opacity=String(.55+i*.07)});
+  $$('.satellite',layer).forEach((el,i)=>{const k=i/4,rx=minRx+(maxRx-minRx)*k,ry=rx*.52,speed=.00016,phase=parseFloat(el.dataset.phase||0),a=phase+ts*speed;el.style.left=(cx+Math.cos(a)*rx)+'px';el.style.top=(cy+Math.sin(a)*ry)+'px';});
+  requestAnimationFrame(animateOrbits);
+}
+function renderContent(){$('#content').className='content';if(state.tab==='hub')return;if(state.tab==='card')renderCard();else if(state.tab==='list')renderList();else if(state.tab==='random')renderRandom();else if(state.tab==='quiz')renderQuiz();else renderProgress();}
+function renderAll(){renderHero();renderFilters();renderTabs();renderContent();syncViewVisibility();}
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.classList.remove('show'),1700);}
+$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.reviewOnly=false;state.cardIndex=0;state.revealed=false;state.quiz=null;renderContent();});
+$('#mustOnly').addEventListener('change',e=>{state.mustOnly=e.target.checked;state.reviewOnly=false;state.cardIndex=0;state.revealed=false;state.quiz=null;renderContent();});
+document.addEventListener('keydown',e=>{if(state.tab==='hub')return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(state.tab==='card'){const list=filteredTerms();if(e.code==='Space'){e.preventDefault();state.revealed=!state.revealed;renderContent();}if(e.key==='ArrowLeft'&&state.cardIndex>0){state.cardIndex--;state.revealed=false;renderContent();}if(e.key==='ArrowRight'&&state.cardIndex<list.length-1){state.cardIndex++;state.revealed=false;renderContent();}if(e.key==='1'&&list.length){setProgress(list[state.cardIndex].id,'done');renderAll();}if(e.key==='2'&&list.length){setProgress(list[state.cardIndex].id,'review');renderAll();}}});
+$('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.stopPropagation();b.onclick=()=>openFeature(b.dataset.action,b,true)});animateOrbits(0);renderAll();
+</script>
+<script>
+(function(){
+  const sphereCanvas=document.getElementById('hubSphereCanvas')||document.getElementById('motionField');
+  const heroCanvas=document.getElementById('heroCanvas');
+  if(!sphereCanvas||!heroCanvas)return;
+  const interactionTarget=sphereCanvas.id==='hubSphereCanvas'?(document.getElementById('hubStage')||sphereCanvas):sphereCanvas;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr=Math.min(devicePixelRatio||1,1.2);
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function fit(c){const r=c.getBoundingClientRect(),w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));if(c.width!==w||c.height!==h){c.width=w;c.height=h}return{w,h}}
+  const view={rx:-.34,ry:.52,vx:0,vy:0,zoom:1,dragging:false,moved:0,lastX:0,lastY:0,paused:false};
+  function rotatePoint(x,y,z,rx,ry){
+    const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);
+    const x1=x*cy-z*sy,z1=x*sy+z*cy;
+    return [x1,y*cx-z1*sx,y*sx+z1*cx];
+  }
+  function projectPoint(p,cx,cy,R){
+    const depth=(p[2]+1)/2,f=1.32-depth*.55;
+    return [cx+p[0]*R*f,cy+p[1]*R*f,depth];
+  }
+  function sphereGeometry(phi,theta){
+    const cp=Math.cos(phi);
+    return [cp*Math.cos(theta),Math.sin(phi),cp*Math.sin(theta)];
+  }
+  function normalize(v){const l=Math.hypot(v[0],v[1],v[2]);return [v[0]/l,v[1]/l,v[2]/l]}
+  function midpoint(a,b){return normalize([a[0]+b[0],a[1]+b[1],a[2]+b[2]])}
+  function vkey(v){return v.map(x=>x.toFixed(5)).join(':')}
+  function buildGeodesic(level){
+    const t=(1+Math.sqrt(5))/2;
+    const verts=[];
+    const index=new Map();
+    const add=v=>{const n=normalize(v),k=vkey(n);if(index.has(k))return index.get(k);const i=verts.length;verts.push(n);index.set(k,i);return i};
+    [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].forEach(add);
+    let faces=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+    for(let pass=0;pass<level;pass++){
+      const next=[];
+      for(const [a,b,c] of faces){
+        const ab=add(midpoint(verts[a],verts[b])),bc=add(midpoint(verts[b],verts[c])),ca=add(midpoint(verts[c],verts[a]));
+        next.push([a,ab,ca],[b,bc,ab],[c,ca,bc],[ab,bc,ca]);
+      }
+      faces=next;
+    }
+    const edgeSet=new Set();
+    for(const [a,b,c] of faces){for(const [x,y] of [[a,b],[b,c],[c,a]]){const k=x<y?x+':'+y:y+':'+x;edgeSet.add(k)}}
+    const edges=[...edgeSet].map(k=>k.split(':').map(Number));
+    return {verts,edges};
+  }
+  const GEO=buildGeodesic(1);
+  function positionSatellites(cx,cy,R,time,home){
+    const els=document.querySelectorAll('.satellite');
+    if(!home){els.forEach(el=>el.style.display='none');return}
+    els.forEach(el=>{
+      if(el.style.display==='none')el.style.display='block';
+      const idx=Number(el.dataset.index||0),count=Number(el.dataset.count||1),orbit=Number(el.dataset.orbit||1),speed=Number(el.dataset.speed||.00007);
+      const angle=time*speed+(idx/count)*Math.PI*2+orbit*.85;
+      const x=cx+Math.cos(angle)*R*orbit,y=cy+Math.sin(angle)*R*orbit*.54,depth=(Math.sin(angle)+1)/2,scale=.62+depth*.55;
+      el.style.left=x+'px';el.style.top=y+'px';el.style.transform=`translate(-50%,-50%) scale(${scale})`;el.style.opacity=String(.34+depth*.66);el.style.zIndex=String(10+Math.round(depth*30));
+    });
+  }
+  function drawSphere(c,time){
+    const {w,h}=fit(c),ctx=c.getContext('2d');ctx.clearRect(0,0,w,h);
+    const isHub=c.id==='hubSphereCanvas';const cx=isHub?w*.5:w*(w<760?.52:.84),cy=isHub?h*.5:h*(w<760?.48:.52),R=Math.min(w,h)*(isHub?(w<760?.25:.28):(w<760?.31:.255))*view.zoom;
+    if(!isHub){const bg=ctx.createRadialGradient(w*.7,h*.52,Math.min(w,h)*.02,w*.7,h*.52,Math.max(w,h)*.86);bg.addColorStop(0,'#111111');bg.addColorStop(.42,'#050505');bg.addColorStop(1,'#000000');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);}
+    const halo=ctx.createRadialGradient(cx,cy,R*.02,cx,cy,R*2.05);
+    halo.addColorStop(0,'rgba(255,255,255,.12)');halo.addColorStop(.45,'rgba(255,255,255,.035)');halo.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=halo;ctx.beginPath();ctx.arc(cx,cy,R*2.05,0,Math.PI*2);ctx.fill();
+    if(!view.dragging&&!view.paused){view.ry+=.0018+view.vy;view.rx=clamp(view.rx+view.vx,-1.25,1.25)}
+    view.vx*=.945;view.vy*=.945;
+    const pts=GEO.verts.map(v=>{const p=rotatePoint(v[0],v[1],v[2],view.rx,view.ry);const depth=(p[2]+1)/2,f=1.32-depth*.55;return [cx+p[0]*R*f,cy+p[1]*R*f,depth]});
+    const ordered=[...GEO.edges].sort((e1,e2)=>{const a=(pts[e1[0]][2]+pts[e1[1]][2])/2,b=(pts[e2[0]][2]+pts[e2[1]][2])/2;return b-a});
+    for(const [a,b] of ordered){const pa=pts[a],pb=pts[b],d=(pa[2]+pb[2])/2,alpha=.025+(1-d)*.32;ctx.strokeStyle=`rgba(255,255,255,${alpha})`;ctx.lineWidth=(d<.5?1.1:.65)*dpr;ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke()}
+    ctx.save();ctx.setLineDash([2.1*dpr,3.8*dpr]);ctx.shadowColor='rgba(255,255,255,.38)';ctx.shadowBlur=2.6*dpr;
+    for(const [a,b] of ordered){const pa=pts[a],pb=pts[b],d=(pa[2]+pb[2])/2,alpha=.28+(1-d)*.7;ctx.strokeStyle=`rgba(0,0,0,${alpha})`;ctx.lineWidth=(d<.5?1.35:.85)*dpr;ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke()}
+    ctx.restore();
+    ctx.save();ctx.shadowColor='rgba(255,255,255,.45)';ctx.shadowBlur=2.2*dpr;for(let i=0;i<pts.length;i++){const q=pts[i],s=(q[2]<.42?2.35:1.45)*dpr;ctx.fillStyle=`rgba(0,0,0,${.35+(1-q[2])*.62})`;ctx.fillRect(q[0]-s/2,q[1]-s/2,s,s)}ctx.restore();
+    ctx.save();ctx.setLineDash([2.4*dpr,4.2*dpr]);ctx.strokeStyle='rgba(0,0,0,.96)';ctx.shadowColor='rgba(255,255,255,.72)';ctx.shadowBlur=4*dpr;ctx.lineWidth=1.35*dpr;ctx.beginPath();ctx.arc(cx,cy,R*1.018,0,Math.PI*2);ctx.stroke();ctx.restore();
+    ctx.setLineDash([4*dpr,6*dpr]);ctx.strokeStyle='rgba(255,255,255,.19)';ctx.lineWidth=dpr;ctx.beginPath();ctx.ellipse(cx,cy,R*1.14,R*.43,-.12,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    const oa=time*.00045,ox=cx+Math.cos(oa)*R*1.14,oy=cy+Math.sin(oa)*R*.43;ctx.fillStyle='rgba(207,57,70,.9)';ctx.beginPath();ctx.arc(ox,oy,2.3*dpr,0,Math.PI*2);ctx.fill();
+  }
+
+  function drawHero(c,time){
+    const {w,h}=fit(c),ctx=c.getContext('2d');ctx.clearRect(0,0,w,h);ctx.fillStyle='#070707';ctx.fillRect(0,0,w,h);
+    const cx=w*.82,cy=h*.57,ink='255,255,255';
+    for(let i=0;i<18;i++){
+      const a=(i/18)*Math.PI*2+Math.sin(time*.00018+i)*.018,r=Math.max(w,h)*1.05;
+      ctx.strokeStyle=`rgba(${ink},${i%4===0?.34:.14})`;ctx.setLineDash([1.1,8.5]);ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.lineTo(cx+Math.cos(a)*34*dpr,cy+Math.sin(a)*34*dpr);ctx.stroke();
+    }
+    const levels=[.08,.26,.5,.78,1],pt=(u,v,s)=>{const rx=cx+u*w*.06,ry=cy+v*h*.08,fx=cx-w*.48+u*w*.30,fy=cy+v*h*.36;return[rx+(fx-rx)*s,ry+(fy-ry)*s]};
+    for(const v of [-1,-.5,0,.5,1]){ctx.strokeStyle=`rgba(${ink},${v===0?.35:.16})`;ctx.setLineDash([1.1,7.6]);ctx.beginPath();levels.forEach((s,j)=>{const q=pt(-1,v,s);j?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])});ctx.stroke();}
+    for(const u of [-1,-.5,0,.5,1]){ctx.strokeStyle=`rgba(${ink},${u===0?.35:.16})`;ctx.setLineDash([1.1,7.6]);ctx.beginPath();levels.forEach((s,j)=>{const q=pt(u,-1,s);j?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])});ctx.stroke();}
+    ctx.setLineDash([]);ctx.strokeStyle='rgba(255,255,255,.32)';ctx.strokeRect(cx-w*.28,cy-h*.32,w*.56,h*.64);
+    for(let i=0;i<86;i++){const x=((i*67.31)%997)/997*w,y=((i*43.17)%991)/991*h,tw=.5+.5*Math.sin(time*.0012+i*1.7);ctx.fillStyle=`rgba(255,255,255,${.1+tw*.32})`;ctx.fillRect(x,y,(i%7===0?1.7:1)*dpr,(i%7===0?1.7:1)*dpr)}
+  }
+  let last=-100;
+  function render(ts){
+    if(!document.hidden&&ts-last>32){drawSphere(sphereCanvas,ts);drawHero(heroCanvas,ts);last=ts}
+    if(!reduce&&!document.hidden)requestAnimationFrame(render);
+  }
+  addEventListener('resize',()=>{clearTimeout(window.__sphereResize);window.__sphereResize=setTimeout(()=>{drawSphere(sphereCanvas,performance.now());drawHero(heroCanvas,performance.now())},100)},{passive:true});
+  interactionTarget.addEventListener('pointerdown',e=>{view.dragging=true;view.moved=0;view.lastX=e.clientX;view.lastY=e.clientY;interactionTarget.setPointerCapture?.(e.pointerId);interactionTarget.style.cursor='grabbing'});
+  interactionTarget.addEventListener('pointermove',e=>{if(!view.dragging)return;const dx=e.clientX-view.lastX,dy=e.clientY-view.lastY;view.lastX=e.clientX;view.lastY=e.clientY;view.moved+=Math.abs(dx)+Math.abs(dy);view.ry+=dx*.007;view.rx=clamp(view.rx+dy*.007,-1.25,1.25);view.vy=dx*.00035;view.vx=dy*.00035;drawSphere(sphereCanvas,performance.now())});
+  interactionTarget.addEventListener('pointerup',e=>{view.dragging=false;interactionTarget.style.cursor='grab';sphereCanvas.releasePointerCapture?.(e.pointerId);if(view.moved<5){view.paused=!view.paused;document.querySelector('.sphere-help')?.classList.toggle('paused',view.paused)}});
+  interactionTarget.addEventListener('pointercancel',()=>{view.dragging=false;interactionTarget.style.cursor='grab'});
+  interactionTarget.addEventListener('dblclick',()=>{view.rx=-.34;view.ry=.52;view.vx=0;view.vy=0;view.vx=0;view.zoom=1;view.paused=false;document.querySelector('.sphere-help')?.classList.remove('paused')});
+  drawSphere(sphereCanvas,0);drawHero(heroCanvas,0);if(!reduce)requestAnimationFrame(render);
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+</script></body>
+</html>
