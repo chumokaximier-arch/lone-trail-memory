@@ -1,0 +1,10 @@
+孤星记忆 · iOS 安装说明
+
+1. 将本文件夹完整上传到一个 HTTPS 静态网站（GitHub Pages、Netlify、Vercel 等均可）。
+2. 用 iPhone 的 Safari 打开网站地址。
+3. 点击 Safari 底部分享按钮，选择“添加到主屏幕”。
+4. 从主屏幕启动后，会以类似 App 的全屏方式运行。
+5. 第一次在线打开后会缓存主要文件，之后可离线使用。
+
+注意：iPhone 需要通过 HTTPS 访问，才能启用离线缓存和完整 PWA 功能。
+如需上架 App Store，需要 Mac + Xcode，再用 Capacitor 或 Swift WKWebView 封装。
