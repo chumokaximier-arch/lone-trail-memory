@@ -375,6 +375,19 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   .hub-view{margin-left:calc(-1 * env(safe-area-inset-left));margin-right:calc(-1 * env(safe-area-inset-right))}
   .transition-copy{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 }
+/* ===== iOS Portrait Optimization ===== */
+.mobile-appbar{display:none}
+@media(max-width:720px){
+  .mobile-appbar{display:flex;align-items:center;gap:9px;min-height:48px;padding:calc(7px + env(safe-area-inset-top)) 4px 8px;color:#fff}
+  .mobile-appbar b{font:400 22px/1 Georgia,"Songti SC",serif;letter-spacing:.02em}
+  .mobile-appbar span{font:700 8px/1.2 Consolas,"Courier New",monospace;letter-spacing:.16em;color:#a9c9cd}
+  .hero{display:none!important}
+  .hub-view{margin:0 0 10px;border-left:0;border-right:0}
+  .hub-stage{height:calc(100svh - 118px);min-height:520px;max-height:760px}
+  .hub-help{padding:8px 6px;font-size:7px}
+  .back-hub{margin-top:8px}
+  .toolbar{margin-top:8px}
+}
 </style>
 </head>
 <body class="view-hub">
@@ -382,6 +395,7 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 <div class="terrain" aria-hidden="true"><i class="m-blue"></i><i class="m-sand"></i><i class="m-orange"></i><i class="m-red"></i></div>
 
 <div class="page">
+  <div class="mobile-appbar"><b>孤星档案</b><span>名词记忆系统</span></div>
   <header class="hero">
     <canvas id="heroCanvas" aria-hidden="true"></canvas>
     <div class="scanline" aria-hidden="true"></div>
@@ -505,7 +519,7 @@ function openFeature(tab,source,animate=false){
 function animateOrbits(ts){
   const layer=$('#orbitLayer');if(!layer||layer.offsetParent===null){requestAnimationFrame(animateOrbits);return;}
   const r=layer.getBoundingClientRect();if(r.width<10)return requestAnimationFrame(animateOrbits);
-  const w=r.width,h=r.height,cx=w/2,cy=h/2,R=Math.min(w,h)*(w<760?.25:.28),maxRx=Math.min(w*.46,R*2),minRx=Math.max(R*1.32,maxRx*.58);
+  const w=r.width,h=r.height,cx=w/2,cy=h/2,R=Math.min(w,h)*(w<760?.30:.28),maxRx=Math.min(w*.46,R*2),minRx=Math.max(R*1.32,maxRx*.58);
   $$('.orbit-ring',layer).forEach((el,i)=>{const k=i/4,rx=minRx+(maxRx-minRx)*k,ry=rx*.52;el.style.width=rx*2+'px';el.style.height=ry*2+'px';el.style.opacity=String(.55+i*.07)});
   $$('.satellite',layer).forEach((el,i)=>{const k=i/4,rx=minRx+(maxRx-minRx)*k,ry=rx*.52,speed=.00016,phase=parseFloat(el.dataset.phase||0),a=phase+ts*speed;el.style.left=(cx+Math.cos(a)*rx)+'px';el.style.top=(cy+Math.sin(a)*ry)+'px';});
   requestAnimationFrame(animateOrbits);
@@ -579,7 +593,7 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
   }
   function drawSphere(c,time){
     const {w,h}=fit(c),ctx=c.getContext('2d');ctx.clearRect(0,0,w,h);
-    const isHub=c.id==='hubSphereCanvas';const cx=isHub?w*.5:w*(w<760?.52:.84),cy=isHub?h*.5:h*(w<760?.48:.52),R=Math.min(w,h)*(isHub?(w<760?.25:.28):(w<760?.31:.255))*view.zoom;
+    const isHub=c.id==='hubSphereCanvas';const cx=isHub?w*.5:w*(w<760?.52:.84),cy=isHub?h*.5:h*(w<760?.48:.52),R=Math.min(w,h)*(isHub?(w<760?.30:.28):(w<760?.31:.255))*view.zoom;
     if(!isHub){const bg=ctx.createRadialGradient(w*.7,h*.52,Math.min(w,h)*.02,w*.7,h*.52,Math.max(w,h)*.86);bg.addColorStop(0,'#111111');bg.addColorStop(.42,'#050505');bg.addColorStop(1,'#000000');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);}
     const halo=ctx.createRadialGradient(cx,cy,R*.02,cx,cy,R*2.05);
     halo.addColorStop(0,'rgba(255,255,255,.12)');halo.addColorStop(.45,'rgba(255,255,255,.035)');halo.addColorStop(1,'rgba(0,0,0,0)');
