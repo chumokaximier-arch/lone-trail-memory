@@ -392,6 +392,13 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .satellite{left:0!important;top:0!important;will-change:transform;contain:layout paint style}
 .orbit-ring{will-change:width,height}
 @media(max-width:720px){#hubSphereCanvas{image-rendering:auto}.orbit-ring{border-style:dotted}}
+/* ===== Satellite Expand Transition ===== */
+.transition-iris{transition:clip-path .78s cubic-bezier(.65,0,.2,1) .10s,opacity .30s ease!important}
+.transition-copy{transition:opacity .26s ease .22s,transform .5s ease!important}
+.satellite-flight{position:fixed!important;left:auto!important;top:auto!important;z-index:140!important;margin:0!important;pointer-events:none!important;transform:translate(-50%,-50%) scale(1) rotate(0deg);transition:transform .72s cubic-bezier(.65,0,.2,1),opacity .55s ease .18s,filter .72s ease;will-change:transform,opacity,filter}
+.satellite-flight .sat-label{opacity:0!important}
+.satellite-flight .sat-index{font-size:13px!important}
+.satellite-flight.launch{transform:translate(-50%,-50%) scale(22) rotate(900deg)!important;opacity:0!important;filter:blur(1.2px)}
 </style>
 </head>
 <body class="view-hub">
@@ -517,9 +524,11 @@ function openFeature(tab,source,animate=false){
   const overlay=$('#transitionOverlay'),idx=$('#transitionIndex'),title=$('#transitionTitle'),r=source.getBoundingClientRect(),meta=featureMeta[tab]||['00','功能'];
   overlay.style.setProperty('--tx',(r.left+r.width/2)+'px');overlay.style.setProperty('--ty',(r.top+r.height/2)+'px');
   idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
-  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},380);
-  setTimeout(()=>overlay.classList.add('reveal'),440);
-  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},860);
+  const clone=source.cloneNode(true);clone.classList.add('satellite-flight');clone.style.setProperty('left',(r.left+r.width/2)+'px','important');clone.style.setProperty('top',(r.top+r.height/2)+'px','important');clone.style.setProperty('width',r.width+'px','important');clone.style.setProperty('height',r.height+'px','important');document.body.appendChild(clone);source.style.opacity='0';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>clone.classList.add('launch')));
+  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},620);
+  setTimeout(()=>overlay.classList.add('reveal'),680);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');clone.remove();source.style.opacity='';state._transitioning=false;},1180);
 }
 let lastOrbit=0,orbitW=0,orbitH=0;
 function animateOrbits(ts){
@@ -655,6 +664,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6').catch(()=>{}));}
 </script></body>
 </html>
