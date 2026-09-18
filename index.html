@@ -557,6 +557,30 @@ body.view-study .detail-right-border{opacity:1}
   88%{opacity:1;width:16px;height:64px;left:calc(100vw - 16px);top:calc(50% - 32px);transform:translateX(0) rotate(0deg) scaleY(27)}
   100%{opacity:1;width:16px;height:64px;left:calc(100vw - 16px);top:calc(50% - 32px);transform:translateX(0) rotate(0deg) scaleY(27)}
 }
+/* ===== True Vertical Unfold After Counterclockwise Rotation ===== */
+@keyframes colorSliderTrail{
+  0%{opacity:1;width:22px;height:100vh;left:0;top:0;transform:translateX(0) rotate(0deg)}
+  12%{opacity:1;width:22px;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(0deg)}
+  24%{opacity:1;width:78px;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(360deg)}
+  38%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(360deg)}
+  50%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:translateX(0) rotate(360deg)}
+  64%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:translateX(0) rotate(0deg)}
+  72%{opacity:1;width:60px;height:20vh;left:calc(100vw - 60px);top:40vh;transform:translateX(0) rotate(0deg)}
+  84%{opacity:1;width:34px;height:60vh;left:calc(100vw - 34px);top:20vh;transform:translateX(0) rotate(0deg)}
+  100%{opacity:1;width:22px;height:100vh;left:calc(100vw - 22px);top:0;transform:translateX(0) rotate(0deg)}
+}
+@keyframes colorSliderTrailMobile{
+  0%{opacity:1;width:16px;height:100vh;left:0;top:0;transform:translateX(0) rotate(0deg)}
+  12%{opacity:1;width:16px;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(0deg)}
+  24%{opacity:1;width:64px;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(360deg)}
+  38%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(360deg)}
+  50%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:translateX(0) rotate(360deg)}
+  64%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:translateX(0) rotate(0deg)}
+  72%{opacity:1;width:50px;height:20vh;left:calc(100vw - 50px);top:40vh;transform:translateX(0) rotate(0deg)}
+  84%{opacity:1;width:30px;height:60vh;left:calc(100vw - 30px);top:20vh;transform:translateX(0) rotate(0deg)}
+  100%{opacity:1;width:16px;height:100vh;left:calc(100vw - 16px);top:0;transform:translateX(0) rotate(0deg)}
+}
+.transition-overlay.active .color-slider{animation-duration:2.80s!important}
 </style>
 </head>
 <body class="view-hub">
@@ -714,7 +738,7 @@ function openFeature(tab,source,animate=false){
   idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
   setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},700);
   setTimeout(()=>overlay.classList.add('reveal'),760);
-  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},2700);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},2900);
 }
 let lastOrbit=0,orbitW=0,orbitH=0;
 function animateOrbits(ts){
@@ -850,6 +874,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=13').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=14').catch(()=>{}));}
 </script></body>
 </html>
