@@ -425,6 +425,10 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   72%{opacity:1;width:100vw;height:64px;top:calc(50% - 32px);transform:translateX(0) rotate(360deg) scale(1)}
   100%{opacity:0;width:100vw;height:64px;top:calc(50% - 32px);transform:translateX(100vw) rotate(360deg) scale(1)}
 }
+/* ===== Slower Transition Timing ===== */
+.transition-iris{transition:transform .72s cubic-bezier(.76,0,.24,1)!important}
+.transition-overlay.active .color-slider{animation-duration:1.46s!important}
+.transition-copy{transition:opacity .38s ease .36s,transform .68s ease!important}
 </style>
 </head>
 <body class="view-hub">
@@ -549,9 +553,9 @@ function openFeature(tab,source,animate=false){
   state._transitioning=true;
   const overlay=$('#transitionOverlay'),idx=$('#transitionIndex'),title=$('#transitionTitle'),meta=featureMeta[tab]||['00','功能'];
   idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
-  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},480);
-  setTimeout(()=>overlay.classList.add('reveal'),520);
-  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},1040);
+  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},700);
+  setTimeout(()=>overlay.classList.add('reveal'),760);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},1540);
 }
 let lastOrbit=0,orbitW=0,orbitH=0;
 function animateOrbits(ts){
@@ -687,6 +691,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=9').catch(()=>{}));}
 </script></body>
 </html>
