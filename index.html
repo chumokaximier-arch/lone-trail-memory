@@ -399,6 +399,13 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .satellite-flight .sat-label{opacity:0!important}
 .satellite-flight .sat-index{font-size:13px!important}
 .satellite-flight.launch{transform:translate(-50%,-50%) scale(22) rotate(900deg)!important;opacity:0!important;filter:blur(1.2px)}
+/* ===== Horizontal Black Slider Transition ===== */
+.transition-iris{position:absolute!important;left:0!important;top:0!important;bottom:0!important;width:112vw!important;background:#000!important;border-right:1px solid #fff;clip-path:none!important;opacity:1!important;transform:translateX(-115%)!important;transition:transform .50s cubic-bezier(.76,0,.24,1)!important}
+.transition-overlay.active .transition-iris{transform:translateX(0)!important}
+.transition-overlay.reveal .transition-iris{transform:translateX(115%)!important;opacity:1!important}
+.transition-iris:after{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 24px rgba(255,255,255,.85)}
+.transition-copy{z-index:2!important}
+.satellite-flight{display:none!important}
 </style>
 </head>
 <body class="view-hub">
@@ -521,14 +528,11 @@ function openFeature(tab,source,animate=false){
   if(state._transitioning)return;
   if(!animate||!source){state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'smooth'});return;}
   state._transitioning=true;
-  const overlay=$('#transitionOverlay'),idx=$('#transitionIndex'),title=$('#transitionTitle'),r=source.getBoundingClientRect(),meta=featureMeta[tab]||['00','功能'];
-  overlay.style.setProperty('--tx',(r.left+r.width/2)+'px');overlay.style.setProperty('--ty',(r.top+r.height/2)+'px');
+  const overlay=$('#transitionOverlay'),idx=$('#transitionIndex'),title=$('#transitionTitle'),meta=featureMeta[tab]||['00','功能'];
   idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
-  const clone=source.cloneNode(true);clone.classList.add('satellite-flight');clone.style.setProperty('left',(r.left+r.width/2)+'px','important');clone.style.setProperty('top',(r.top+r.height/2)+'px','important');clone.style.setProperty('width',r.width+'px','important');clone.style.setProperty('height',r.height+'px','important');document.body.appendChild(clone);source.style.opacity='0';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>clone.classList.add('launch')));
-  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},620);
-  setTimeout(()=>overlay.classList.add('reveal'),680);
-  setTimeout(()=>{overlay.classList.remove('active','reveal');clone.remove();source.style.opacity='';state._transitioning=false;},1180);
+  setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},480);
+  setTimeout(()=>overlay.classList.add('reveal'),520);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},1040);
 }
 let lastOrbit=0,orbitW=0,orbitH=0;
 function animateOrbits(ts){
@@ -664,6 +668,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7').catch(()=>{}));}
 </script></body>
 </html>
