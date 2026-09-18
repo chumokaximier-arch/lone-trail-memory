@@ -747,14 +747,10 @@ body.view-study .detail-right-border{opacity:1}
   6%{opacity:1;width:0;height:78px;left:0;top:calc(50% - 39px);transform:rotate(0deg)}
   24%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:rotate(0deg)}
   34%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:rotate(0deg)}
-  48%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(0deg)}
-  60%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(-270deg)}
-  64%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(-270deg)}
-  76%{opacity:1;width:22px;height:100vh;left:calc(100vw - 22px);top:0;transform:rotate(-360deg)}
-  84%{opacity:1;width:22px;height:100vh;left:calc(100vw - 22px);top:0;transform:rotate(-360deg)}
-  92%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:rotate(-360deg)}
-  97%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:rotate(-360deg)}
-  100%{opacity:0;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:rotate(-360deg)}
+  50%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(0deg)}
+  62%{opacity:1;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(0deg)}
+  78%{opacity:0;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(0deg)}
+  100%{opacity:0;width:78px;height:78px;left:calc(100vw - 78px);top:calc(50% - 39px);transform:rotate(0deg)}
 }
 @media(max-width:720px){
   .transition-overlay.active .color-slider{animation-name:colorSliderAfterBlackMobile!important}
@@ -763,14 +759,10 @@ body.view-study .detail-right-border{opacity:1}
     6%{opacity:1;width:0;height:64px;left:0;top:calc(50% - 32px);transform:rotate(0deg)}
     24%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:rotate(0deg)}
     34%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:rotate(0deg)}
-    48%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(0deg)}
-    60%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(-270deg)}
-    64%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(-270deg)}
-    76%{opacity:1;width:16px;height:100vh;left:calc(100vw - 16px);top:0;transform:rotate(-360deg)}
-    84%{opacity:1;width:16px;height:100vh;left:calc(100vw - 16px);top:0;transform:rotate(-360deg)}
-    92%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:rotate(-360deg)}
-    97%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:rotate(-360deg)}
-    100%{opacity:0;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:rotate(-360deg)}
+    50%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(0deg)}
+    62%{opacity:1;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(0deg)}
+    78%{opacity:0;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(0deg)}
+    100%{opacity:0;width:64px;height:64px;left:calc(100vw - 64px);top:calc(50% - 32px);transform:rotate(0deg)}
   }
 }
 </style>
@@ -1065,6 +1057,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=16').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=17').catch(()=>{}));}
 </script></body>
 </html>
