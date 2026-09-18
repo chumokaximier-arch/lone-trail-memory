@@ -471,6 +471,17 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   100%{opacity:0;transform:translate(-50%,-50%) translate(calc(var(--x) * 2.5),calc(var(--y) * 2.5)) rotate(calc(var(--r) + 190deg)) scale(.18)}
 }
 @media(max-width:720px){.transition-copy:before{width:180px!important;height:180px!important}.sphere-shards i{width:11px;height:6px}}
+/* ===== Draggable Course Slider ===== */
+#coursePills.course-slider-track{position:relative;display:flex;flex-wrap:nowrap;align-items:stretch;overflow-x:auto;overflow-y:hidden;background:#fff;border:1px solid #111;border-radius:0;scroll-behavior:smooth;scrollbar-width:none;max-width:100%}
+#coursePills.course-slider-track::-webkit-scrollbar{display:none}
+.course-option{position:relative;z-index:2;pointer-events:none;flex:0 0 auto;border:0;border-right:1px solid #111;background:transparent;color:#222;padding:9px 14px;font-weight:700;white-space:nowrap;transition:color .18s}
+.course-option:last-of-type{border-right:0}
+.course-option.active,.course-option.drag-target{color:#fff!important}
+.course-option .count{margin-left:5px;font:700 11px/1 Consolas,monospace;opacity:.62;color:inherit}
+.course-slider-knob{position:absolute;left:0;top:0;bottom:0;z-index:1;width:80px;background:#101010;box-shadow:inset 0 0 0 1px #101010;cursor:grab;touch-action:none;will-change:transform,width;pointer-events:auto}
+.course-slider-knob:active{cursor:grabbing}
+#coursePills.dragging{user-select:none}
+@media(max-width:720px){.course-option{padding:8px 11px;font-size:12px}.course-slider-knob{min-width:2px}}
 </style>
 </head>
 <body class="view-hub">
@@ -550,7 +561,37 @@ function getProgress(id){return state.progress[id]||'new';}
 function setProgress(id,value){if(value==='new')delete state.progress[id];else state.progress[id]=value;saveProgress();}
 function masteredCount(){return DATA.terms.filter(t=>getProgress(t.id)==='done').length;}
 function renderHero(){$('#heroTotal').textContent=DATA.terms.length;$('#heroMust').textContent=DATA.terms.filter(t=>t.must).length;$('#heroDone').textContent=masteredCount();const center=document.querySelector('.hub-center-label b');if(center)center.textContent=DATA.terms.length;const node=document.querySelector('.hud-bl');if(node)node.textContent='SECTOR 04 // NODE '+DATA.terms.length;}
-function renderFilters(){const coursePills=$('#coursePills');const counts={'全部':DATA.terms.length};DATA.courses.forEach(c=>counts[c.course]=courseTerms(c.course).length);coursePills.innerHTML=['全部',...DATA.courses.map(c=>c.course)].map(c=>`<button class="pill ${state.course===c?'active':''}" data-course="${escapeHTML(c)}">${c==='全部'?'全部':escapeHTML(c)}<span class="count">${counts[c]}</span></button>`).join('');$$('.pill',coursePills).forEach(b=>b.onclick=()=>{state.course=b.dataset.course;state.project='全部项目';state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();});const select=$('#projectSelect');const projects=projectsForScope();if(!projects.includes(state.project))state.project='全部项目';select.innerHTML=['全部项目',...projects].map(p=>`<option ${state.project===p?'selected':''}>${escapeHTML(p)}</option>`).join('');select.onchange=()=>{state.project=select.value;state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();};}
+let courseDrag=null;
+function getCourseOptions(){return $$('.course-option',$('#coursePills'))}
+function getCoursePositions(){return getCourseOptions().map(o=>({course:o.dataset.course,left:o.offsetLeft,width:o.offsetWidth}))}
+function setCourseSlider(index,animate=true){
+  const track=$('#coursePills'),knob=$('.course-slider-knob',track),positions=getCoursePositions();if(!knob||!positions.length)return;
+  const i=Math.max(0,Math.min(index,positions.length-1)),p=positions[i];
+  knob.style.transition=animate?'transform .26s cubic-bezier(.2,.7,.2,1),width .26s cubic-bezier(.2,.7,.2,1)':'none';
+  knob.style.width=p.width+'px';knob.style.transform='translate3d('+p.left+'px,0,0)';
+  getCourseOptions().forEach((o,j)=>o.classList.toggle('drag-target',j===i));
+}
+function selectCourse(course){
+  if(state.course===course)return;
+  state.course=course;state.project='全部项目';state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll();
+}
+function renderFilters(){
+  const track=$('#coursePills'),counts={'全部':DATA.terms.length};DATA.courses.forEach(c=>counts[c.course]=courseTerms(c.course).length);
+  const courses=['全部',...DATA.courses.map(c=>c.course)];
+  track.classList.add('course-slider-track');
+  track.innerHTML=courses.map((c,i)=>`<button class="course-option ${state.course===c?'active':''}" data-course="${escapeHTML(c)}" data-index="${i}" type="button">${c==='全部'?'全部':escapeHTML(c)}<span class="count">${counts[c]}</span></button>`).join('')+'<span class="course-slider-knob" role="slider" tabindex="0" aria-label="课程选择滑块"></span>';
+  const knob=$('.course-slider-knob',track),options=getCourseOptions(),active=Math.max(0,courses.indexOf(state.course));
+  requestAnimationFrame(()=>setCourseSlider(active,false));
+  options.forEach((o,i)=>{o.onclick=()=>selectCourse(o.dataset.course)});
+track.addEventListener('click',e=>{if(track.dataset.knobDrag)return;const x=e.clientX-track.getBoundingClientRect().left+track.scrollLeft;const pos=getCoursePositions().find(p=>x>=p.left&&x<=p.left+p.width);if(pos)selectCourse(pos.course)});
+  knob.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const i=Math.max(0,Math.min(options.length-1,active+(e.key==='ArrowRight'?1:-1)));selectCourse(options[i].dataset.course)}});
+  knob.addEventListener('pointerdown',e=>{e.preventDefault();const positions=getCoursePositions(),startIndex=Math.max(0,courses.indexOf(state.course));courseDrag={startX:e.clientX,startLeft:positions[startIndex].left,startScroll:track.scrollLeft,positions,index:startIndex,width:positions[startIndex].width};track.classList.add('dragging');track.dataset.knobDrag='1';knob.setPointerCapture?.(e.pointerId)});
+  const select=$('#projectSelect'),projects=projectsForScope();if(!projects.includes(state.project))state.project='全部项目';select.innerHTML=['全部项目',...projects].map(p=>`<option ${state.project===p?'selected':''}>${escapeHTML(p)}</option>`).join('');
+  select.onchange=()=>{state.project=select.value;state.cardIndex=0;state.revealed=false;state.quiz=null;renderAll()};
+}
+document.addEventListener('pointermove',e=>{if(!courseDrag)return;e.preventDefault();const track=$('#coursePills'),knob=$('.course-slider-knob',track);const rect=track.getBoundingClientRect();if(e.clientX>rect.right-38)track.scrollLeft+=10;if(e.clientX<rect.left+38)track.scrollLeft-=10;const delta=e.clientX-courseDrag.startX+(track.scrollLeft-courseDrag.startScroll);const last=courseDrag.positions[courseDrag.positions.length-1];const maxLeft=Math.max(0,last.left+last.width-courseDrag.width);const left=Math.max(0,Math.min(maxLeft,courseDrag.startLeft+delta));let best=0,bestDist=Infinity;courseDrag.positions.forEach((p,i)=>{const d=Math.abs(left+p.width/2-(p.left+p.width/2));if(d<bestDist){bestDist=d;best=i}});courseDrag.index=best;courseDrag.width=courseDrag.positions[best].width;knob.style.transition='none';knob.style.width=courseDrag.width+'px';knob.style.transform='translate3d('+left+'px,0,0)';getCourseOptions().forEach((o,i)=>o.classList.toggle('drag-target',i===best));},{passive:false});
+document.addEventListener('pointerup',()=>{if(!courseDrag)return;const pos=courseDrag.positions[courseDrag.index];const track=$('#coursePills');courseDrag=null;track.classList.remove('dragging');selectCourse(pos.course);setTimeout(()=>{try{delete track.dataset.knobDrag}catch(e){}},0)});
+document.addEventListener('pointercancel',()=>{if(!courseDrag)return;courseDrag=null;$('#coursePills').classList.remove('dragging');renderAll()});
 function renderTabs(){$('#tabs').innerHTML=tabs.map(t=>`<button class="tab-btn ${state.tab===t.id?'active':''}" data-tab="${t.id}">${t.label}</button>`).join('');$$('.tab-btn').forEach(b=>b.onclick=()=>{openFeature(b.dataset.tab,null,false);});}
 function highlight(t){let html=escapeHTML(t.definition);[...(t.key||[])].sort((a,b)=>b.length-a.length).forEach(k=>{if(!k)return;const safe=escapeHTML(k);html=html.split(safe).join(`<mark>${safe}</mark>`);});return html;}
 function badges(t){return `<div class="badges"><span class="badge course">${escapeHTML(t.course)}</span><span class="badge">${escapeHTML(t.project)}</span>${t.must?'<span class="badge must">重点必背</span>':''}</div>`;}
@@ -733,6 +774,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=11').catch(()=>{}));}
 </script></body>
 </html>
