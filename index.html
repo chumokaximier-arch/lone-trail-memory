@@ -482,6 +482,59 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .course-slider-knob:active{cursor:grabbing}
 #coursePills.dragging{user-select:none}
 @media(max-width:720px){.course-option{padding:8px 11px;font-size:12px}.course-slider-knob{min-width:2px}}
+/* ===== Color Stripe Transfer To Right Border ===== */
+body.view-study .page{background-image:none!important}
+.detail-right-border{position:fixed;right:0;top:0;bottom:0;width:22px;z-index:90;pointer-events:none;opacity:0;transition:opacity .24s ease;background:linear-gradient(90deg,var(--ref-blue) 0 25%,var(--ref-sand) 25% 50%,var(--ref-orange) 50% 75%,var(--ref-red) 75% 100%);border-left:1px solid #fff;box-shadow:-5px 0 16px rgba(255,255,255,.12)}
+body.view-study .detail-right-border{opacity:1}
+.transition-overlay.active .color-slider{animation-duration:2.60s!important}
+.transition-copy:before{animation-duration:2.60s!important}
+.transition-copy b,.transition-copy span{animation-duration:2.60s!important}
+.transition-overlay.active .sphere-shards i{animation-duration:2.60s!important}
+@keyframes colorSliderTrail{
+  0%{opacity:1;width:22px;height:100vh;left:0;top:0;transform:translateX(0) rotate(0deg) scale(1)}
+  12%{opacity:1;width:22px;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(0deg) scale(1)}
+  24%{opacity:1;width:78px;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(360deg) scale(1)}
+  40%{opacity:1;width:100vw;height:78px;left:0;top:calc(50% - 39px);transform:translateX(0) rotate(360deg) scale(1)}
+  52%{opacity:1;width:78px;height:78px;left:calc(100vw - 142px);top:calc(50% - 39px);transform:translateX(0) rotate(360deg) scale(1)}
+  64%{opacity:1;width:78px;height:78px;left:calc(100vw - 142px);top:calc(50% - 39px);transform:translateX(0) rotate(-360deg) scale(1)}
+  86%{opacity:1;width:22px;height:100vh;left:calc(100vw - 22px);top:0;transform:translateX(0) rotate(-360deg) scale(1)}
+  100%{opacity:1;width:22px;height:100vh;left:calc(100vw - 22px);top:0;transform:translateX(0) rotate(-360deg) scale(1)}
+}
+@keyframes sphereRingLife{
+  0%,31%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0deg)}
+  36%{opacity:1;transform:translate(-50%,-50%) scale(1.07) rotate(12deg)}
+  44%{opacity:.25;transform:translate(-50%,-50%) scale(1.22) rotate(32deg)}
+  50%{opacity:0;transform:translate(-50%,-50%) scale(1.34) rotate(44deg)}
+  100%{opacity:0}
+}
+@keyframes sphereTextLife{
+  0%,30%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  38%{opacity:.9;transform:translate(-50%,-50%) scale(1.08)}
+  46%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}
+  100%{opacity:0}
+}
+@keyframes sphereTitleLife{0%,30%{opacity:1}38%{opacity:.9}46%{opacity:0}100%{opacity:0}}
+@keyframes sphereShardFly{
+  0%,31%{opacity:0;transform:translate(-50%,-50%) translate(var(--x),var(--y)) rotate(var(--r)) scale(.2)}
+  36%{opacity:1;transform:translate(-50%,-50%) translate(var(--x),var(--y)) rotate(var(--r)) scale(1.05)}
+  50%{opacity:1;transform:translate(-50%,-50%) translate(calc(var(--x) * 1.65),calc(var(--y) * 1.65)) rotate(calc(var(--r) + 90deg)) scale(.85)}
+  62%{opacity:0;transform:translate(-50%,-50%) translate(calc(var(--x) * 2.5),calc(var(--y) * 2.5)) rotate(calc(var(--r) + 190deg)) scale(.18)}
+  100%{opacity:0}
+}
+@media(max-width:720px){
+  .detail-right-border{width:16px}
+  .transition-overlay.active .color-slider{animation-name:colorSliderTrailMobile}
+}
+@keyframes colorSliderTrailMobile{
+  0%{opacity:1;width:16px;height:100vh;left:0;top:0;transform:translateX(0) rotate(0deg) scale(1)}
+  12%{opacity:1;width:16px;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(0deg) scale(1)}
+  24%{opacity:1;width:64px;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(360deg) scale(1)}
+  40%{opacity:1;width:100vw;height:64px;left:0;top:calc(50% - 32px);transform:translateX(0) rotate(360deg) scale(1)}
+  52%{opacity:1;width:64px;height:64px;left:calc(100vw - 112px);top:calc(50% - 32px);transform:translateX(0) rotate(360deg) scale(1)}
+  64%{opacity:1;width:64px;height:64px;left:calc(100vw - 112px);top:calc(50% - 32px);transform:translateX(0) rotate(-360deg) scale(1)}
+  86%{opacity:1;width:16px;height:100vh;left:calc(100vw - 16px);top:0;transform:translateX(0) rotate(-360deg) scale(1)}
+  100%{opacity:1;width:16px;height:100vh;left:calc(100vw - 16px);top:0;transform:translateX(0) rotate(-360deg) scale(1)}
+}
 </style>
 </head>
 <body class="view-hub">
@@ -542,6 +595,7 @@ button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   <main class="content" id="content"></main>
   <div class="footer">数据来自现有《市场营销》《营销策划实务（第2版）》《推销实务（第2版）》课件与《销售心理学教案》，已按复习用途整理精简。学习进度保存在本机浏览器中。</div>
 </div>
+<div class="detail-right-border" aria-hidden="true"></div>
 <div class="toast" id="toast"></div>
 <div class="transition-overlay" id="transitionOverlay" aria-hidden="true"><div class="transition-iris"></div><div class="color-slider"></div><div class="transition-copy"><b id="transitionIndex">01</b><span id="transitionTitle">名词速记</span><div class="sphere-shards"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
 
@@ -638,7 +692,7 @@ function openFeature(tab,source,animate=false){
   idx.textContent=meta[0];title.textContent=meta[1];overlay.classList.remove('reveal');overlay.classList.add('active');
   setTimeout(()=>{state.tab=tab;state.quiz=null;state.revealed=false;renderAll();window.scrollTo({top:0,behavior:'auto'});},700);
   setTimeout(()=>overlay.classList.add('reveal'),760);
-  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},1540);
+  setTimeout(()=>{overlay.classList.remove('active','reveal');state._transitioning=false;},2700);
 }
 let lastOrbit=0,orbitW=0,orbitH=0;
 function animateOrbits(ts){
@@ -774,6 +828,6 @@ $('#backHub').onclick=showHub;$$('.satellite').forEach(b=>{b.onpointerdown=e=>e.
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=11').catch(()=>{}));}
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=12').catch(()=>{}));}
 </script></body>
 </html>
